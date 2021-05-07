@@ -22,7 +22,6 @@
 
 package dgca.verifier.app.decoder.schema
 
-import android.util.Log
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.fge.jsonschema.core.report.ProcessingReport
@@ -50,13 +49,11 @@ class DefaultSchemaValidator : SchemaValidator {
             val schema: JsonSchema = factory.getJsonSchema(schemaNode)
 
             val report: ProcessingReport = schema.validate(jsonNode)
-            Log.d("Schema validation", "report result: ${report.isSuccess}")
 
             isValid = report.isSuccess
             verificationResult.isSchemaValid = isValid
 
         } catch (ex: Exception) {
-            Log.w("Schema validation", ex)
         }
 
         return isValid
