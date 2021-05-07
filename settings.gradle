@@ -1,0 +1,2 @@
+include ':decoder'
+rootProject.name = "dgca-app-core-android"
