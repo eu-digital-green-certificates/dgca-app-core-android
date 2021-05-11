@@ -22,9 +22,10 @@
 
 package dgca.verifier.app.decoder
 
+import com.upokecenter.cbor.CBORObject
 import java.security.PublicKey
 import java.security.Signature
-import java.util.ArrayList
+import java.util.*
 import kotlin.experimental.and
 
 fun Signature.verify(verificationKey: PublicKey, dataToBeVerified: ByteArray, coseSignature: ByteArray): Boolean {
@@ -97,4 +98,17 @@ private fun ByteArray.unsignedInteger(): ByteArray {
     System.arraycopy(this, offset, der, 2 + pad, length)
 
     return der
+}
+
+fun ByteArray.getValidationDataFromCOSE(): ByteArray {
+    val messageObject = CBORObject.DecodeFromBytes(this)
+    val protectedHeader = messageObject[0].GetByteString()
+    val content = messageObject[2].GetByteString()
+
+    return CBORObject.NewArray().apply {
+        Add("Signature1")
+        Add(protectedHeader)
+        Add(ByteArray(0))
+        Add(content)
+    }.EncodeToBytes()
 }
