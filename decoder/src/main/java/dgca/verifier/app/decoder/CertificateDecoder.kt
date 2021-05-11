@@ -22,6 +22,8 @@
 
 package dgca.verifier.app.decoder
 
+import dgca.verifier.app.decoder.model.GreenCertificate
+
 /**
  * Represents error that might occur during decoding green certificate QR.
  */
@@ -39,7 +41,7 @@ sealed class CertificateDecodingError(val error: Throwable? = null) {
  * specific descriptive error {@link Error}.
  */
 sealed class CertificateDecodingResult {
-    class Success(val certificateModel: CertificateModel) : CertificateDecodingResult()
+    class Success(val greenCertificate: GreenCertificate) : CertificateDecodingResult()
     data class Error(val error: CertificateDecodingError) : CertificateDecodingResult()
 }
 

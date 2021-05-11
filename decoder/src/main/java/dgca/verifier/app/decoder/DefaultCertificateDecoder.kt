@@ -65,15 +65,8 @@ class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder) :
             return CertificateDecodingResult.Error(CertificateDecodingError.GreenCertificateDecodingError(error))
         } ?: return CertificateDecodingResult.Error(CertificateDecodingError.EmptyGreenCertificate)
 
-        val certificateModel: CertificateModel = try {
-            greenCertificate.toCertificateModel()
-        } catch (error: Throwable) {
-            return CertificateDecodingResult.Error(
-                CertificateDecodingError.CertificateConversionError(error)
-            )
-        }
 
-        return CertificateDecodingResult.Success(certificateModel)
+        return CertificateDecodingResult.Success(greenCertificate)
     }
 
 
