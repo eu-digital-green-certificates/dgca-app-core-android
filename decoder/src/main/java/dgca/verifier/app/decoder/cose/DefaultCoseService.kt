@@ -36,12 +36,16 @@ class DefaultCoseService : CoseService {
             val content = messageObject[2].GetByteString()
             val rgbProtected = messageObject[0].GetByteString()
             val key = HeaderKeys.KID.AsCBOR()
-            val objProtected = CBORObject.DecodeFromBytes(rgbProtected).get(key).GetByteString()
-            CoseData(content, objProtected)
+            var kid = CBORObject.DecodeFromBytes(rgbProtected).get(key)
+            // Kid in unprotected header
+            if (kid == null) {
+                kid = messageObject[1].get(key)
+            }
+            val kidByteString = kid.GetByteString()
+            CoseData(content, kidByteString)
 
         } catch (e: Throwable) {
             null
         }
     }
 }
-
