@@ -22,10 +22,17 @@
 
 package dgca.verifier.app.decoder
 
+import com.upokecenter.cbor.CBORObject
+import dgca.verifier.app.decoder.model.KeyPairData
 import java.io.ByteArrayInputStream
+import java.security.KeyPairGenerator
+import java.security.MessageDigest
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 import java.util.Base64
+
+const val ECDSA_256 = -7
+const val RSA_PSS_256 = -37
 
 fun ByteArray.asBase64(): String = Base64.getEncoder().encodeToString(this)
 
@@ -44,4 +51,31 @@ fun String.base64ToX509Certificate(): X509Certificate? {
     val inputStream = ByteArrayInputStream(decoded)
 
     return CertificateFactory.getInstance("X.509").generateCertificate(inputStream) as? X509Certificate
+}
+
+fun ByteArray.toHash(): String {
+    return MessageDigest.getInstance("SHA-256")
+        .digest(this)
+        .asBase64()
+}
+
+fun ByteArray.generateKeyPair(): KeyPairData? {
+    val messageObject = CBORObject.DecodeFromBytes(this)
+    val protectedHeader = messageObject[0].GetByteString()
+
+    // get algorithm from header
+    when (CBORObject.DecodeFromBytes(protectedHeader).get(1).AsInt32Value()) {
+        ECDSA_256 -> {
+            val keyPairGen = KeyPairGenerator.getInstance("EC")
+            keyPairGen.initialize(256)
+            return KeyPairData("SHA256withECDSA", keyPairGen.generateKeyPair())
+        }
+        RSA_PSS_256 -> {
+            val keyPairGen = KeyPairGenerator.getInstance("RSA")
+            keyPairGen.initialize(2048)
+            return KeyPairData("SHA256WithRSA", keyPairGen.generateKeyPair())
+        }
+    }
+
+    return null
 }

@@ -23,6 +23,8 @@
 package dgca.verifier.app.decoder.cose
 
 import com.upokecenter.cbor.CBORObject
+import dgca.verifier.app.decoder.ECDSA_256
+import dgca.verifier.app.decoder.RSA_PSS_256
 import dgca.verifier.app.decoder.convertToDer
 import dgca.verifier.app.decoder.model.VerificationResult
 import dgca.verifier.app.decoder.verify
@@ -70,11 +72,6 @@ class VerificationCryptoService : CryptoService {
             Add(ByteArray(0))
             Add(content)
         }.EncodeToBytes()
-    }
-
-    companion object {
-        private const val ECDSA_256 = -7
-        private const val RSA_PSS_256 = -37
     }
 
     enum class Algo(val value: String) {

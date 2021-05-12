@@ -45,4 +45,18 @@ data class GreenCertificate(
     @JsonProperty("r")
     val recoveryStatements: List<RecoveryStatement>?
 
-) : Serializable
+) : Serializable {
+
+    fun getDgci(): String {
+        return try {
+            return when {
+                vaccinations?.isNotEmpty() == true -> vaccinations.last().certificateIdentifier
+                tests?.isNotEmpty() == true -> tests.last().certificateIdentifier
+                recoveryStatements?.isNotEmpty() == true -> recoveryStatements.last().certificateIdentifier
+                else -> ""
+            }
+        } catch (ex: Exception) {
+            ""
+        }
+    }
+}
