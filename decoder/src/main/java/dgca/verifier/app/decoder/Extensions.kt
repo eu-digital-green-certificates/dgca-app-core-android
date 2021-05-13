@@ -34,9 +34,7 @@ import java.util.Base64
 const val ECDSA_256 = -7
 const val RSA_PSS_256 = -37
 
-fun ByteArray.asBase64(): String = Base64.getEncoder().encodeToString(this)
-
-fun ByteArray.toBase64(): String = Base64.getUrlEncoder().encodeToString(this)
+fun ByteArray.toBase64(): String = Base64.getEncoder().encodeToString(this)
 
 fun ByteArray.toHexString(): String = joinToString("") { "%02x".format(it) }
 
@@ -56,7 +54,7 @@ fun String.base64ToX509Certificate(): X509Certificate? {
 fun ByteArray.toHash(): String {
     return MessageDigest.getInstance("SHA-256")
         .digest(this)
-        .asBase64()
+        .toBase64()
 }
 
 fun ByteArray.generateKeyPair(): KeyPairData? {
