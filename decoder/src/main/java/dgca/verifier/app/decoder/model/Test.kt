@@ -24,6 +24,9 @@ package dgca.verifier.app.decoder.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.io.Serializable
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 data class Test(
 
@@ -60,4 +63,35 @@ data class Test(
     @JsonProperty("ci")
     val certificateIdentifier: String
 
-) : Serializable
+) : Serializable {
+
+    fun isTestValid(): Boolean {
+        return testResult == TestResult.NOT_DETECTED.value &&
+                parseToUtcTimestamp(dateTimeOfCollection).isBefore(OffsetDateTime.now())
+    }
+
+    fun getTestResultType(): TestResult {
+        return when (testResult) {
+            TestResult.DETECTED.value -> TestResult.DETECTED
+            TestResult.NOT_DETECTED.value -> TestResult.NOT_DETECTED
+            else -> TestResult.NOT_DETECTED
+        }
+    }
+
+    private fun parseToUtcTimestamp(value: String?): OffsetDateTime {
+        if (value.isNullOrEmpty()) {
+            return OffsetDateTime.MAX
+        }
+
+        return try {
+            DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(value, OffsetDateTime::from).withOffsetSameInstant(ZoneOffset.UTC)
+        } catch (ex: Exception) {
+            OffsetDateTime.MAX
+        }
+    }
+
+    enum class TestResult(val value: String) {
+        DETECTED("260373001"),
+        NOT_DETECTED("260415000")
+    }
+}

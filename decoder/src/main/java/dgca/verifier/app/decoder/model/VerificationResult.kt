@@ -28,11 +28,14 @@ data class VerificationResult(
     var zlibDecoded: Boolean = false,
     var coseVerified: Boolean = false,
     var cborDecoded: Boolean = false,
-    var isSchemaValid: Boolean = false
+    var isSchemaValid: Boolean = false,
+    var testVerification: TestVerificationResult? = null
 ) {
 
-    fun isValid(): Boolean =
-        base45Decoded && zlibDecoded && coseVerified && cborDecoded && isSchemaValid
+    fun isValid(): Boolean {
+        val isTestValid = testVerification?.isDetected ?: true
+        return base45Decoded && zlibDecoded && coseVerified && cborDecoded && isSchemaValid && isTestValid
+    }
 
     override fun toString(): String {
         return "VerificationResult: \n" +
@@ -44,3 +47,7 @@ data class VerificationResult(
                 "isSchemaValid: $isSchemaValid"
     }
 }
+
+data class TestVerificationResult(
+    val isDetected: Boolean
+)
