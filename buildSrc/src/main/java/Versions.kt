@@ -52,4 +52,6 @@ object Versions {
 
     // Tests
     const val junit = "4.13.1"
+    const val junit_jupiter = "5.7.1"
+    const val hamcrest = "2.2"
 }

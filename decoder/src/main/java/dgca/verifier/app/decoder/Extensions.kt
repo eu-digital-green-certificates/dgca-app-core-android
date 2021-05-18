@@ -45,7 +45,7 @@ fun String.hexToByteArray(): ByteArray = chunked(2)
 fun String.fromBase64(): ByteArray = Base64.getDecoder().decode(this)
 
 fun String.base64ToX509Certificate(): X509Certificate? {
-    val decoded = android.util.Base64.decode(this, android.util.Base64.NO_WRAP)
+    val decoded = Base64.getDecoder().decode(this)
     val inputStream = ByteArrayInputStream(decoded)
 
     return CertificateFactory.getInstance("X.509").generateCertificate(inputStream) as? X509Certificate

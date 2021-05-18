@@ -30,7 +30,7 @@ import dgca.verifier.app.decoder.model.VerificationResult
 class DefaultPrefixValidationService(private val prefix: String = "HC1:") : PrefixValidationService {
 
     override fun decode(input: String, verificationResult: VerificationResult): String = when {
-        input.startsWith(prefix) -> input.drop(prefix.length).also { verificationResult.countryPrefix = prefix }
-        else -> input.also { verificationResult.countryPrefix = null }
+        input.startsWith(prefix) -> input.drop(prefix.length).also { verificationResult.contextPrefix = prefix }
+        else -> input.also { verificationResult.contextPrefix = null }
     }
 }

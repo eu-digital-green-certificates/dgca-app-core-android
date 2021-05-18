@@ -24,7 +24,7 @@ package dgca.verifier.app.decoder.model
 
 data class VerificationResult(
     var base45Decoded: Boolean = false,
-    var countryPrefix: String? = null,
+    var contextPrefix: String? = null,
     var zlibDecoded: Boolean = false,
     var coseVerified: Boolean = false,
     var cborDecoded: Boolean = false,
@@ -40,7 +40,7 @@ data class VerificationResult(
     override fun toString(): String {
         return "VerificationResult: \n" +
                 "base45Decoded: $base45Decoded \n" +
-                "valSuitePrefix: $countryPrefix \n" +
+                "contextPrefix: $contextPrefix \n" +
                 "zlibDecoded: $zlibDecoded \n" +
                 "coseVerified: $coseVerified \n" +
                 "cborDecoded: $cborDecoded \n" +
