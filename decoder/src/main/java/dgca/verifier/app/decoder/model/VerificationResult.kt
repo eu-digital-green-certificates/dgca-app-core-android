@@ -30,14 +30,14 @@ data class VerificationResult(
     var cborDecoded: Boolean = false,
     var isSchemaValid: Boolean = false,
     var isIssuedTimeCorrect: Boolean = false,
-    var isExpired: Boolean = false,
+    var isNotExpired: Boolean = false,
     var testVerification: TestVerificationResult? = null
 ) {
 
     fun isValid(): Boolean {
         val isTestValid = testVerification?.isDetected ?: true
         return base45Decoded && zlibDecoded && coseVerified && cborDecoded && isSchemaValid && isTestValid &&
-                isIssuedTimeCorrect && !isExpired
+                isIssuedTimeCorrect && isNotExpired
     }
 
     override fun toString(): String {

@@ -40,7 +40,7 @@ class DefaultCborService : CborService {
             verificationResult.isIssuedTimeCorrect = issuedAt.isBefore(Instant.now())
 
             val expirationTime = Instant.ofEpochSecond(map[CwtHeaderKeys.EXPIRATION.asCBOR()].AsInt64())
-            verificationResult.isExpired = expirationTime.isBefore(Instant.now())
+            verificationResult.isNotExpired = expirationTime.isAfter(Instant.now())
 
             val hcert = map[CwtHeaderKeys.HCERT.asCBOR()]
             val hcertv1 = hcert[CBORObject.FromObject(1)].EncodeToBytes()

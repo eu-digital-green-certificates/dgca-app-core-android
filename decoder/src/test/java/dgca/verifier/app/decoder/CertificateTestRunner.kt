@@ -17,9 +17,12 @@ import dgca.verifier.app.decoder.prefixvalidation.DefaultPrefixValidationService
 import dgca.verifier.app.decoder.prefixvalidation.PrefixValidationService
 import dgca.verifier.app.decoder.schema.DefaultSchemaValidator
 import dgca.verifier.app.decoder.schema.SchemaValidator
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.notNullValue
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalToIgnoringCase
+import org.hamcrest.Matchers.not
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -94,13 +97,13 @@ class CertificateTestRunner {
         case.expectedResult.compression?.let {
             assertThat(verificationResult.zlibDecoded, equalTo(it))
             if (it) {
-                assertThat(compressedCose.toHexString(), equalTo(case.compressedHex))
+                assertThat(compressedCose.toHexString(), equalToIgnoringCase(case.compressedHex))
             }
         }
         case.expectedResult.coseSignature?.let {
             assertThat(verificationResult.coseVerified, equalTo(it))
             if (it) {
-                assertThat(cose.toHexString(), equalTo(case.coseHex))
+                assertThat(cose.toHexString(), equalToIgnoringCase(case.coseHex))
             }
         }
         case.expectedResult.cborDecode?.let {
@@ -109,44 +112,35 @@ class CertificateTestRunner {
                 assertThat(greenCertificate, equalTo(case.eudgc))
             }
         }
-
-//        "EXPECTEDDECODE": true,
-//        "EXPECTEDVERIFY": true,
-//        "EXPECTEDUNPREFIX": true,
-//        "EXPECTEDVALIDJSON": true,
-//        "EXPECTEDCOMPRESSION": true,
-//        "EXPECTEDB45DECODE": true
-
-
-//        case.expectedResult.json?.let {
-//            assertThat(chainResult.eudgc.removeEmptyArrays(), equalTo(case.eudgc?.toEuSchema()))
-//            if (!it) assertThat(decision, equalTo(VerificationDecision.FAIL))
-//        }
-//        case.expectedResult.schemaValidation?.let {
-//            // TODO Implement schema validation
-//            //assertThat(verificationResult.cborDecoded, equalTo(it))
-//            //if (!it) assertThat(decision, equalTo(VerificationDecision.FAIL))
-//        }
-//        case.expectedResult.expirationCheck?.let {
-//            if (it) assertThat(decision, equalTo(VerificationDecision.GOOD))
-//            if (!it) assertThat(decision, equalTo(VerificationDecision.FAIL))
-//        }
-//        case.expectedResult.keyUsage?.let {
-//            if (it) assertThat(decision, equalTo(VerificationDecision.GOOD))
-//            if (!it) assertThat(decision, equalTo(VerificationDecision.FAIL))
-//        }
+        case.expectedResult.json?.let {
+            if (it) {
+                assertThat(greenCertificate, equalTo(case.eudgc))
+            } else {
+                assertThat(greenCertificate, not(case.eudgc))
+            }
+        }
+        case.expectedResult.schemaValidation?.let {
+            assertThat(verificationResult.isSchemaValid, equalTo(it))
+        }
+        case.expectedResult.expirationCheck?.let {
+            val isTimeValid = !(!verificationResult.isNotExpired || !verificationResult.isIssuedTimeCorrect)
+            assertThat(isTimeValid, equalTo(it))
+        }
+        case.expectedResult.keyUsage?.let {
+//            assertThat(verificationResult.isValid(), equalTo(it)) // TODO: what should we check here ?
+        }
     }
 
     companion object {
 
-        const val TEST_CASE_REPOSITORY_PATH = "dgc-testdata/common/2DCode/raw"
+        private const val TEST_CASE_REPOSITORY_PATH = "dgc-testdata/common/"
 
         @JvmStatic
         @Suppress("unused")
         fun verificationProvider(): List<Arguments> {
             val testcaseFiles = mutableListOf<File>()
             File("../../$TEST_CASE_REPOSITORY_PATH/").walkTopDown().forEach {
-                if (it.isFile) {
+                if (it.isFile && it.extension == "json") {
                     testcaseFiles.add(it)
                 }
             }
@@ -156,6 +150,15 @@ class CertificateTestRunner {
                 val text = it.bufferedReader().readText()
                 Arguments.of(it.name, ObjectMapper().readValue(text, TestCase::class.java))
             }
+
+//            TODO: For one file testing. Remove in final commit
+//            return listOf(
+//                Arguments.of(
+//                    "it.name", ObjectMapper().readValue(
+//                        File("src/test/resources/CO16.json").bufferedReader().readText(), TestCase::class.java
+//                    )
+//                )
+//            )
         }
     }
 }
