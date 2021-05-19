@@ -17,9 +17,7 @@ import dgca.verifier.app.decoder.prefixvalidation.DefaultPrefixValidationService
 import dgca.verifier.app.decoder.prefixvalidation.PrefixValidationService
 import dgca.verifier.app.decoder.schema.DefaultSchemaValidator
 import dgca.verifier.app.decoder.schema.SchemaValidator
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.CoreMatchers.nullValue
+import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalToIgnoringCase
 import org.junit.jupiter.api.BeforeEach
@@ -141,11 +139,13 @@ class CertificateTestRunner {
 
     companion object {
 
+        const val TEST_CASE_REPOSITORY_PATH = "dgc-testdata/common/2DCode/raw"
+
         @JvmStatic
         @Suppress("unused")
         fun verificationProvider(): List<Arguments> {
             val testcaseFiles = mutableListOf<File>()
-            File("src/test/resources/").walkTopDown().forEach {
+            File("../../$TEST_CASE_REPOSITORY_PATH/").walkTopDown().forEach {
                 if (it.isFile) {
                     testcaseFiles.add(it)
                 }
