@@ -28,10 +28,19 @@ import dgca.verifier.app.decoder.RSA_PSS_256
 import dgca.verifier.app.decoder.convertToDer
 import dgca.verifier.app.decoder.model.VerificationResult
 import dgca.verifier.app.decoder.verify
+import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo
+import org.bouncycastle.jce.provider.BouncyCastleProvider
+import java.security.KeyFactory
+import java.security.Security
 import java.security.Signature
 import java.security.cert.Certificate
+import java.security.spec.RSAPublicKeySpec
 
 class VerificationCryptoService : CryptoService {
+
+    init {
+        Security.addProvider(BouncyCastleProvider()) // for SHA256withRSA/PSS
+    }
 
     override fun validate(cose: ByteArray, certificate: Certificate, verificationResult: VerificationResult) {
         val verificationKey = certificate.publicKey
@@ -52,12 +61,18 @@ class VerificationCryptoService : CryptoService {
                         coseSignature
                     )
                 }
-                RSA_PSS_256 ->
+                RSA_PSS_256 -> {
+                    val bytes = SubjectPublicKeyInfo.getInstance(certificate.publicKey.encoded).publicKeyData.bytes
+                    val rsaPublicKey = org.bouncycastle.asn1.pkcs.RSAPublicKey.getInstance(bytes)
+                    val spec = RSAPublicKeySpec(rsaPublicKey.modulus, rsaPublicKey.publicExponent)
+                    val key = KeyFactory.getInstance("RSA").generatePublic(spec)
+
                     Signature.getInstance(Algo.ALGO_RSA256_PSS.value).verify(
-                        verificationKey,
+                        key,
                         dataToBeVerified,
                         coseSignature
                     )
+                }
                 else -> false
             }
         } catch (ex: Exception) {

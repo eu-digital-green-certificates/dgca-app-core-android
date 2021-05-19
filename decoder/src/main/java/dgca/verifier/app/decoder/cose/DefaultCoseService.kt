@@ -30,7 +30,6 @@ import dgca.verifier.app.decoder.model.VerificationResult
 class DefaultCoseService : CoseService {
 
     override fun decode(input: ByteArray, verificationResult: VerificationResult): CoseData? {
-        verificationResult.coseVerified = false
         return try {
             val messageObject = CBORObject.DecodeFromBytes(input)
             val content = messageObject[2].GetByteString()

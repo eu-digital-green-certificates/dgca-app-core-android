@@ -1,6 +1,6 @@
 package dgca.verifier.app.decoder
 
-import com.google.gson.Gson
+import com.fasterxml.jackson.databind.ObjectMapper
 import dgca.verifier.app.decoder.base45.Base45Service
 import dgca.verifier.app.decoder.base45.DefaultBase45Service
 import dgca.verifier.app.decoder.cbor.CborService
@@ -11,6 +11,7 @@ import dgca.verifier.app.decoder.cose.CoseService
 import dgca.verifier.app.decoder.cose.CryptoService
 import dgca.verifier.app.decoder.cose.DefaultCoseService
 import dgca.verifier.app.decoder.cose.VerificationCryptoService
+import dgca.verifier.app.decoder.model.GreenCertificate
 import dgca.verifier.app.decoder.model.VerificationResult
 import dgca.verifier.app.decoder.prefixvalidation.DefaultPrefixValidationService
 import dgca.verifier.app.decoder.prefixvalidation.PrefixValidationService
@@ -55,16 +56,17 @@ class CertificateTestRunner {
         println("Executing verification test case \"${filename}\": \"${case.context.description}\"")
         if (case.context.certificate == null) throw IllegalArgumentException("certificate")
 
+        var greenCertificate: GreenCertificate? = null
         val verificationResult = VerificationResult()
         val qrCode = case.base45WithPrefix ?: ""
-        val plainInput = prefixValidationService.decode(qrCode, verificationResult)
-        val compressedCose = base45Service.decode(plainInput, verificationResult)
+        val base45 = prefixValidationService.decode(qrCode, verificationResult)
+        val compressedCose = base45Service.decode(base45, verificationResult)
         val cose = compressorService.decode(compressedCose, verificationResult)
         val coseData = coseService.decode(cose, verificationResult)
         if (coseData != null) {
             val kid = coseData.kid
             schemaValidator.validate(coseData.cbor, verificationResult)
-            val greenCertificate = cborService.decode(coseData.cbor, verificationResult)
+            greenCertificate = cborService.decode(coseData.cbor, verificationResult)
             val certificate = case.context.certificate.base64ToX509Certificate()
             if (certificate != null) {
                 cryptoService.validate(cose, certificate, verificationResult)
@@ -86,31 +88,38 @@ class CertificateTestRunner {
             }
         }
         case.expectedResult.base45Decode?.let {
+            assertThat(verificationResult.base45Decoded, equalTo(it))
             if (it) {
-
-            } else {
-                assertThat(verificationResult.base45Decoded, equalTo(false))
+                assertThat(base45, equalToIgnoringCase(case.base45))
             }
         }
         case.expectedResult.compression?.let {
             assertThat(verificationResult.zlibDecoded, equalTo(it))
             if (it) {
-                assertThat(compressedCose.toHexString(), equalToIgnoringCase(case.coseHex))
+                assertThat(compressedCose.toHexString(), equalTo(case.compressedHex))
             }
         }
-//        case.expectedResult.coseSignature?.let {
-//            assertThat(verificationResult.coseVerified, equalTo(it))
-//            if (!it) assertThat(decision, equalTo(VerificationDecision.FAIL))
-//        }
-//        case.expectedResult.cborDecode?.let {
-//            assertThat(verificationResult.cborDecoded, equalTo(it))
-//            if (it) {
-//                assertThat(chainResult.eudgc.removeEmptyArrays(), equalTo(case.eudgc?.toEuSchema()))
-//                // doesn't make sense to compare exact CBOR hex encoding
-//                //assertThat(chainResult.step1Cbor.toHexString(), equalToIgnoringCase(case.cborHex))
-//            }
-//            if (!it) assertThat(decision, equalTo(VerificationDecision.FAIL))
-//        }
+        case.expectedResult.coseSignature?.let {
+            assertThat(verificationResult.coseVerified, equalTo(it))
+            if (it) {
+                assertThat(cose.toHexString(), equalTo(case.coseHex))
+            }
+        }
+        case.expectedResult.cborDecode?.let {
+            assertThat(verificationResult.cborDecoded, equalTo(it))
+            if (it) {
+                assertThat(greenCertificate, equalTo(case.eudgc))
+            }
+        }
+
+//        "EXPECTEDDECODE": true,
+//        "EXPECTEDVERIFY": true,
+//        "EXPECTEDUNPREFIX": true,
+//        "EXPECTEDVALIDJSON": true,
+//        "EXPECTEDCOMPRESSION": true,
+//        "EXPECTEDB45DECODE": true
+
+
 //        case.expectedResult.json?.let {
 //            assertThat(chainResult.eudgc.removeEmptyArrays(), equalTo(case.eudgc?.toEuSchema()))
 //            if (!it) assertThat(decision, equalTo(VerificationDecision.FAIL))
@@ -135,18 +144,17 @@ class CertificateTestRunner {
         @JvmStatic
         @Suppress("unused")
         fun verificationProvider(): List<Arguments> {
-            val testcaseFiles = listOf(
-                "src/test/resources/Q1.json",   // Picture decode fail
-                "src/test/resources/H1.json",   // Wrong prefix
-                "src/test/resources/H2.json",   // Wrong prefix
-                "src/test/resources/H3.json",   // Wrong prefix
-                "src/test/resources/B1.json",   // BASE45 invalid
-                "src/test/resources/Z1.json"    // Compression broken
-            )
+            val testcaseFiles = mutableListOf<File>()
+            File("src/test/resources/").walkTopDown().forEach {
+                if (it.isFile) {
+                    testcaseFiles.add(it)
+                }
+            }
+
             return testcaseFiles.map {
                 println("Loading $it...")
-                val text = File(it).bufferedReader().readText()
-                Arguments.of(it, Gson().fromJson(text, TestCase::class.java))
+                val text = it.bufferedReader().readText()
+                Arguments.of(it.name, ObjectMapper().readValue(text, TestCase::class.java))
             }
         }
     }

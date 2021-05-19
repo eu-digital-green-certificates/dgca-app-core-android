@@ -1,91 +1,91 @@
 package dgca.verifier.app.decoder
 
-import com.google.gson.annotations.SerializedName
+import com.fasterxml.jackson.annotation.JsonProperty
 import dgca.verifier.app.decoder.model.GreenCertificate
 
 data class TestCase(
 
-    @SerializedName("JSON")
+    @JsonProperty("JSON")
     val eudgc: GreenCertificate? = null,
 
-    @SerializedName("CBOR")
+    @JsonProperty("CBOR")
     val cborHex: String? = null,
 
-    @SerializedName("COSE")
+    @JsonProperty("COSE")
     val coseHex: String? = null,
 
-    @SerializedName("COMPRESSED")
+    @JsonProperty("COMPRESSED")
     val compressedHex: String? = null,
 
-    @SerializedName("BASE45")
+    @JsonProperty("BASE45")
     val base45: String? = null,
 
-    @SerializedName("PREFIX")
+    @JsonProperty("PREFIX")
     val base45WithPrefix: String? = null,
 
-    @SerializedName("2DCODE")
+    @JsonProperty("2DCODE")
     val qrCodePng: String? = null,
 
-    @SerializedName("TESTCTX")
+    @JsonProperty("TESTCTX")
     val context: TestContext,
 
-    @SerializedName("EXPECTEDRESULTS")
+    @JsonProperty("EXPECTEDRESULTS")
     val expectedResult: TestExpectedResults
 )
 
 data class TestContext(
 
-    @SerializedName("VERSION")
+    @JsonProperty("VERSION")
     val version: Int,
 
-    @SerializedName("SCHEMA")
+    @JsonProperty("SCHEMA")
     val schema: String,
 
-    @SerializedName("CERTIFICATE")
+    @JsonProperty("CERTIFICATE")
     val certificate: String?,
 
-    @SerializedName("VALIDATIONCLOCK")
+    @JsonProperty("VALIDATIONCLOCK")
     val validationClock: String?,
 
-    @SerializedName("DESCRIPTION")
+    @JsonProperty("DESCRIPTION")
     val description: String
 )
 
 data class TestExpectedResults(
 
-    @SerializedName("EXPECTEDVALIDOBJECT")
+    @JsonProperty("EXPECTEDVALIDOBJECT")
     val schemaGeneration: Boolean? = null,
 
-    @SerializedName("EXPECTEDSCHEMAVALIDATION")
+    @JsonProperty("EXPECTEDSCHEMAVALIDATION")
     val schemaValidation: Boolean? = null,
 
-    @SerializedName("EXPECTEDENCODE")
+    @JsonProperty("EXPECTEDENCODE")
     val encodeGeneration: Boolean? = null,
 
-    @SerializedName("EXPECTEDDECODE")
+    @JsonProperty("EXPECTEDDECODE")
     val cborDecode: Boolean? = null,
 
-    @SerializedName("EXPECTEDVERIFY")
+    @JsonProperty("EXPECTEDVERIFY")
     val coseSignature: Boolean? = null,
 
-    @SerializedName("EXPECTEDUNPREFIX")
+    @JsonProperty("EXPECTEDUNPREFIX")
     val prefix: Boolean? = null,
 
-    @SerializedName("EXPECTEDVALIDJSON")
+    @JsonProperty("EXPECTEDVALIDJSON")
     val json: Boolean? = null,
 
-    @SerializedName("EXPECTEDCOMPRESSION")
+    @JsonProperty("EXPECTEDCOMPRESSION")
     val compression: Boolean? = null,
 
-    @SerializedName("EXPECTEDB45DECODE")
+    @JsonProperty("EXPECTEDB45DECODE")
     val base45Decode: Boolean? = null,
 
-    @SerializedName("EXPECTEDPICTUREDECODE")
+    @JsonProperty("EXPECTEDPICTUREDECODE")
     val qrDecode: Boolean? = null,
 
-    @SerializedName("EXPECTEDEXPIRATIONCHECK")
+    @JsonProperty("EXPECTEDEXPIRATIONCHECK")
     val expirationCheck: Boolean? = null,
 
-    @SerializedName("EXPECTEDKEYUSAGE")
+    @JsonProperty("EXPECTEDKEYUSAGE")
     val keyUsage: Boolean? = null
 )
