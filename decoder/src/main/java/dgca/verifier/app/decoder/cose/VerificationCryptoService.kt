@@ -48,11 +48,12 @@ class VerificationCryptoService : CryptoService {
             val messageObject = CBORObject.DecodeFromBytes(cose)
             var coseSignature = messageObject.get(3).GetByteString()
             val protectedHeader = messageObject[0].GetByteString()
+            val unprotectedHeader = messageObject[1]
             val content = messageObject[2].GetByteString()
             val dataToBeVerified = getValidationData(protectedHeader, content)
 
             // get algorithm from header and verify signature
-            when (CBORObject.DecodeFromBytes(protectedHeader).get(1).AsInt32Value()) {
+            when (getAlgoFromHeader(protectedHeader, unprotectedHeader)) {
                 ECDSA_256 -> {
                     coseSignature = coseSignature.convertToDer()
                     Signature.getInstance(Algo.ALGO_ECDSA256.value).verify(
@@ -77,6 +78,19 @@ class VerificationCryptoService : CryptoService {
             }
         } catch (ex: Exception) {
             false
+        }
+    }
+
+    private fun getAlgoFromHeader(protectedHeader: ByteArray, unprotectedHeader: CBORObject): Int {
+        return if (protectedHeader.isNotEmpty()) {
+            try {
+                val algo = CBORObject.DecodeFromBytes(protectedHeader).get(1)
+                algo?.AsInt32Value() ?: unprotectedHeader.get(1).AsInt32Value()
+            } catch (ex: Exception) {
+                unprotectedHeader.get(1).AsInt32Value()
+            }
+        } else {
+            unprotectedHeader.get(1).AsInt32Value()
         }
     }
 

@@ -65,7 +65,6 @@ class CertificateTestRunner {
         val cose = compressorService.decode(compressedCose, verificationResult)
         val coseData = coseService.decode(cose, verificationResult)
         if (coseData != null) {
-            val kid = coseData.kid
             schemaValidator.validate(coseData.cbor, verificationResult)
             greenCertificate = cborService.decode(coseData.cbor, verificationResult)
             val certificate = case.context.certificate.base64ToX509Certificate()
@@ -74,13 +73,6 @@ class CertificateTestRunner {
             }
         }
 
-        case.expectedResult.qrDecode?.let {
-            if (it) {
-                assertThat(qrCode, equalTo(case.base45WithPrefix))
-            } else {
-                assertThat(verificationResult.isValid(), equalTo(false))
-            }
-        }
         case.expectedResult.prefix?.let {
             if (it) {
                 assertThat(verificationResult.contextPrefix, notNullValue())
@@ -126,9 +118,6 @@ class CertificateTestRunner {
             val isTimeValid = !(!verificationResult.isNotExpired || !verificationResult.isIssuedTimeCorrect)
             assertThat(isTimeValid, equalTo(it))
         }
-        case.expectedResult.keyUsage?.let {
-//            assertThat(verificationResult.isValid(), equalTo(it)) // TODO: what should we check here ?
-        }
     }
 
     companion object {
@@ -138,7 +127,7 @@ class CertificateTestRunner {
         @JvmStatic
         @Suppress("unused")
         fun verificationProvider(): List<Arguments> {
-            val testcaseFiles = mutableListOf<TestCase>()
+            val testcaseFiles = mutableMapOf<String, TestCase>()
             File("../../$TEST_CASE_REPOSITORY_PATH/").walkTopDown().forEach { file ->
                 if (file.isFile && file.extension == "json") {
                     val data = try {
@@ -146,20 +135,20 @@ class CertificateTestRunner {
                     } catch (ex: Exception) {
                         null
                     }
-                    data?.let { testcaseFiles.add(it) }
+                    data?.let { testcaseFiles.put(file.path, it) }
                 }
             }
 
             return testcaseFiles.map {
                 println("Loading $it...")
-                Arguments.of(it.toString(), it)
+                Arguments.of(it.key, it.value)
             }
 
 //            TODO: For one file testing. Remove in final commit
 //            return listOf(
 //                Arguments.of(
 //                    "it.name", ObjectMapper().readValue(
-//                        File("src/test/resources/CO16.json").bufferedReader().readText(), TestCase::class.java
+//                        File("src/test/resources/CO22.json").bufferedReader().readText(), TestCase::class.java
 //                    )
 //                )
 //            )
