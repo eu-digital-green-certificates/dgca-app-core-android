@@ -133,22 +133,26 @@ class CertificateTestRunner {
 
     companion object {
 
-        private const val TEST_CASE_REPOSITORY_PATH = "dgc-testdata/common/"
+        private const val TEST_CASE_REPOSITORY_PATH = "dgc-testdata/"
 
         @JvmStatic
         @Suppress("unused")
         fun verificationProvider(): List<Arguments> {
-            val testcaseFiles = mutableListOf<File>()
-            File("../../$TEST_CASE_REPOSITORY_PATH/").walkTopDown().forEach {
-                if (it.isFile && it.extension == "json") {
-                    testcaseFiles.add(it)
+            val testcaseFiles = mutableListOf<TestCase>()
+            File("../../$TEST_CASE_REPOSITORY_PATH/").walkTopDown().forEach { file ->
+                if (file.isFile && file.extension == "json") {
+                    val data = try {
+                        ObjectMapper().readValue(file.bufferedReader().readText(), TestCase::class.java)
+                    } catch (ex: Exception) {
+                        null
+                    }
+                    data?.let { testcaseFiles.add(it) }
                 }
             }
 
             return testcaseFiles.map {
                 println("Loading $it...")
-                val text = it.bufferedReader().readText()
-                Arguments.of(it.name, ObjectMapper().readValue(text, TestCase::class.java))
+                Arguments.of(it.toString(), it)
             }
 
 //            TODO: For one file testing. Remove in final commit
