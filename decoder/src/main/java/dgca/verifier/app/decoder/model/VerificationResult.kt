@@ -37,6 +37,16 @@ data class VerificationResult(
         return base45Decoded && zlibDecoded && coseVerified && cborDecoded && isSchemaValid && isTestValid
     }
 
+    /**
+     * Checks if all the checks but signature validation passed.
+     * Ultimately value {@code true} returned by the method
+     * would mean that signature validation has been checked. And it failed.
+     */
+    fun isSignatureInvalid(): Boolean {
+        val isTestValid = testVerification?.isDetected ?: true
+        return (base45Decoded && zlibDecoded && cborDecoded && isSchemaValid && isTestValid) && !coseVerified
+    }
+
     override fun toString(): String {
         return "VerificationResult: \n" +
                 "base45Decoded: $base45Decoded \n" +
