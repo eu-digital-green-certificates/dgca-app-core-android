@@ -143,15 +143,6 @@ class CertificateTestRunner {
                 println("Loading $it...")
                 Arguments.of(it.key, it.value)
             }
-
-//            TODO: For one file testing. Remove in final commit
-//            return listOf(
-//                Arguments.of(
-//                    "it.name", ObjectMapper().readValue(
-//                        File("src/test/resources/CO22.json").bufferedReader().readText(), TestCase::class.java
-//                    )
-//                )
-//            )
         }
     }
 }
