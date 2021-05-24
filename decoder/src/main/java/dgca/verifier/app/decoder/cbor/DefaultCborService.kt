@@ -37,10 +37,10 @@ class DefaultCborService : CborService {
             val map = CBORObject.DecodeFromBytes(input)
 
             val issuedAt = Instant.ofEpochSecond(map[CwtHeaderKeys.ISSUED_AT.asCBOR()].AsInt64())
-            if (issuedAt.isAfter(Instant.now())) throw IllegalArgumentException("IssuedAt not correct: $issuedAt")
+            verificationResult.isIssuedTimeCorrect = issuedAt.isBefore(Instant.now())
 
             val expirationTime = Instant.ofEpochSecond(map[CwtHeaderKeys.EXPIRATION.asCBOR()].AsInt64())
-            if (expirationTime.isBefore(Instant.now())) throw IllegalArgumentException("Expiration not correct: $expirationTime")
+            verificationResult.isNotExpired = expirationTime.isAfter(Instant.now())
 
             val hcert = map[CwtHeaderKeys.HCERT.asCBOR()]
             val hcertv1 = hcert[CBORObject.FromObject(1)].EncodeToBytes()

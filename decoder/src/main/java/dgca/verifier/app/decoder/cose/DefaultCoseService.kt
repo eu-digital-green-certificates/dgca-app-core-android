@@ -30,22 +30,31 @@ import dgca.verifier.app.decoder.model.VerificationResult
 class DefaultCoseService : CoseService {
 
     override fun decode(input: ByteArray, verificationResult: VerificationResult): CoseData? {
-        verificationResult.coseVerified = false
         return try {
             val messageObject = CBORObject.DecodeFromBytes(input)
             val content = messageObject[2].GetByteString()
-            val rgbProtected = messageObject[0].GetByteString()
-            val key = HeaderKeys.KID.AsCBOR()
-            var kid = CBORObject.DecodeFromBytes(rgbProtected).get(key)
-            // Kid in unprotected header
-            if (kid == null) {
-                kid = messageObject[1].get(key)
-            }
-            val kidByteString = kid.GetByteString()
+            val protectedHeader = messageObject[0].GetByteString()
+            val unprotectedHeader = messageObject[1]
+            val kid = getKid(protectedHeader, unprotectedHeader)
+            val kidByteString = kid?.GetByteString()
             CoseData(content, kidByteString)
 
         } catch (e: Throwable) {
             null
+        }
+    }
+
+    private fun getKid(protectedHeader: ByteArray, unprotectedHeader: CBORObject): CBORObject? {
+        val key = HeaderKeys.KID.AsCBOR()
+        return if (protectedHeader.isNotEmpty()) {
+            try {
+                val kid = CBORObject.DecodeFromBytes(protectedHeader).get(key)
+                kid ?: unprotectedHeader.get(key)
+            } catch (ex: Exception) {
+                unprotectedHeader.get(key)
+            }
+        } else {
+            unprotectedHeader.get(key)
         }
     }
 }
