@@ -25,6 +25,9 @@ package dgca.verifier.app.decoder.cose
 import dgca.verifier.app.decoder.model.CoseData
 import dgca.verifier.app.decoder.model.VerificationResult
 
+/**
+ * Decodes input according to COSE specification (RFC8152)
+ */
 interface CoseService {
 
     fun decode(input: ByteArray, verificationResult: VerificationResult): CoseData?

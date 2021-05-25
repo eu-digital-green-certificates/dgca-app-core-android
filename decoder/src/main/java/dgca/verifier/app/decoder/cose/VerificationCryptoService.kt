@@ -36,6 +36,9 @@ import java.security.Signature
 import java.security.cert.Certificate
 import java.security.spec.RSAPublicKeySpec
 
+/**
+ * Verifies COSE signature
+ */
 class VerificationCryptoService : CryptoService {
 
     init {

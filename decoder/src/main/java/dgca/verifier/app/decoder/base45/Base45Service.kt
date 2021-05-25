@@ -24,6 +24,9 @@ package dgca.verifier.app.decoder.base45
 
 import dgca.verifier.app.decoder.model.VerificationResult
 
+/**
+ * Decodes input from Base45
+ */
 interface Base45Service {
 
     fun decode(input: String, verificationResult: VerificationResult): ByteArray

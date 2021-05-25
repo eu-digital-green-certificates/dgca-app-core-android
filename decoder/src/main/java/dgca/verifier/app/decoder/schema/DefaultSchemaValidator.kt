@@ -32,6 +32,11 @@ import dgca.verifier.app.decoder.JSON_SCHEMA_V1
 import dgca.verifier.app.decoder.cwt.CwtHeaderKeys
 import dgca.verifier.app.decoder.model.VerificationResult
 
+/**
+ * Verifies CBOR with predefined schema
+ *
+ * @see JSON_SCHEMA_V1
+ */
 class DefaultSchemaValidator : SchemaValidator {
 
     override fun validate(cbor: ByteArray, verificationResult: VerificationResult): Boolean {
