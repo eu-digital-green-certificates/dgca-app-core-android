@@ -24,6 +24,9 @@ package dgca.verifier.app.decoder.schema
 
 import dgca.verifier.app.decoder.model.VerificationResult
 
+/**
+ * Verifies CBOR schema
+ */
 interface SchemaValidator {
 
     fun validate(cbor: ByteArray, verificationResult: VerificationResult): Boolean

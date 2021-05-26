@@ -24,6 +24,9 @@ package dgca.verifier.app.decoder.prefixvalidation
 
 import dgca.verifier.app.decoder.model.VerificationResult
 
+/**
+ * Drops prefix from input
+ */
 interface PrefixValidationService {
 
     fun decode(input: String, verificationResult: VerificationResult): String

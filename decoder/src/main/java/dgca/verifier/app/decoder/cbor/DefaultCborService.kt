@@ -29,6 +29,9 @@ import dgca.verifier.app.decoder.model.GreenCertificate
 import dgca.verifier.app.decoder.model.VerificationResult
 import java.time.Instant
 
+/**
+ * Decodes input as a CBOR structure
+ */
 class DefaultCborService : CborService {
 
     override fun decode(input: ByteArray, verificationResult: VerificationResult): GreenCertificate? {

@@ -27,6 +27,9 @@ import com.upokecenter.cbor.CBORObject
 import dgca.verifier.app.decoder.model.CoseData
 import dgca.verifier.app.decoder.model.VerificationResult
 
+/**
+ * Decodes input according to COSE specification (RFC8152)
+ */
 class DefaultCoseService : CoseService {
 
     override fun decode(input: ByteArray, verificationResult: VerificationResult): CoseData? {

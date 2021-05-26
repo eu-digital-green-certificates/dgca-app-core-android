@@ -25,6 +25,9 @@ package dgca.verifier.app.decoder.cose
 import dgca.verifier.app.decoder.model.VerificationResult
 import java.security.cert.Certificate
 
+/**
+ * Verifies COSE signature
+ */
 interface CryptoService {
 
     fun validate(cose: ByteArray, certificate: Certificate, verificationResult: VerificationResult)

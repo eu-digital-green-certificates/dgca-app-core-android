@@ -25,10 +25,13 @@ package dgca.verifier.app.decoder.compression
 import dgca.verifier.app.decoder.model.VerificationResult
 import java.util.zip.InflaterInputStream
 
+/**
+ * Decompresses input with ZLIB
+ */
 class DefaultCompressorService : CompressorService {
 
     /**
-     * *Optionally* decompresses input with ZLIB = inflating.
+     * Decompresses input with ZLIB = inflating.
      *
      * If the [input] does not start with ZLIB magic numbers (0x78), no decompression happens
      */

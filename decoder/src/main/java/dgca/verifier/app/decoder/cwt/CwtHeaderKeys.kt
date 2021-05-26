@@ -36,13 +36,7 @@ sealed class CwtHeaderKeys(value: Int) {
         return value
     }
 
-    object ISSUER : CwtHeaderKeys(1)
-    object SUBJECT : CwtHeaderKeys(2)
-    object AUDIENCE : CwtHeaderKeys(3)
     object EXPIRATION : CwtHeaderKeys(4)
-    object NOT_BEFORE : CwtHeaderKeys(5)
     object ISSUED_AT : CwtHeaderKeys(6)
-    object CWT_ID : CwtHeaderKeys(7)
-
     object HCERT : CwtHeaderKeys(-260)
 }

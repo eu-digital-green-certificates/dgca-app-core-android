@@ -24,6 +24,9 @@ package dgca.verifier.app.decoder.compression
 
 import dgca.verifier.app.decoder.model.VerificationResult
 
+/**
+ * Decompresses input
+ */
 interface CompressorService {
 
     fun decode(input: ByteArray, verificationResult: VerificationResult): ByteArray

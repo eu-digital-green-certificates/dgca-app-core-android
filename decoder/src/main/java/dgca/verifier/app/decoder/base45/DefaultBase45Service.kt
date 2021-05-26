@@ -24,6 +24,9 @@ package dgca.verifier.app.decoder.base45
 
 import dgca.verifier.app.decoder.model.VerificationResult
 
+/**
+ * Decodes input from Base45
+ */
 @ExperimentalUnsignedTypes
 class DefaultBase45Service : Base45Service {
 
