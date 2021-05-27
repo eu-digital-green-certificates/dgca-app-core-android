@@ -107,7 +107,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        \"fn\": {\n" +
         "          \"title\": \"Family name\",\n" +
         "          \"description\": \"The family or primary name(s) of the person addressed in the certificate\",\n" +
-        "          \"type\": \"string\",\n" +
+        "          \"type\": [\"null\", \"string\"],\n" +
         "          \"maxLength\": 50,\n" +
         "          \"examples\": [\n" +
         "            \"d'Červenková Panklová\"\n" +
@@ -125,7 +125,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        \"gn\": {\n" +
         "          \"title\": \"Given name\",\n" +
         "          \"description\": \"The given name(s) of the person addressed in the certificate\",\n" +
-        "          \"type\": \"string\",\n" +
+        "          \"type\": [\"null\", \"string\"],\n" +
         "          \"maxLength\": 50,\n" +
         "          \"examples\": [\n" +
         "            \"Jiřina-Maria Alena\"\n" +
@@ -134,7 +134,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        \"gnt\": {\n" +
         "          \"title\": \"Standardised given name\",\n" +
         "          \"description\": \"The given name(s) of the person transliterated\",\n" +
-        "          \"type\": \"string\",\n" +
+        "          \"type\": [\"null\", \"string\"],\n" +
         "          \"maxLength\": 50,\n" +
         "          \"examples\": [\n" +
         "            \"JIRINA<MARIA<ALENA\"\n" +
@@ -243,7 +243,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        },\n" +
         "        \"dr\": {\n" +
         "          \"description\": \"Date/Time of Test Result\",\n" +
-        "          \"type\": \"string\",\n" +
+        "          \"type\": [\"null\", \"string\"],\n" +
         "          \"format\": \"date-time\"\n" +
         "        },\n" +
         "        \"tr\": {\n" +
