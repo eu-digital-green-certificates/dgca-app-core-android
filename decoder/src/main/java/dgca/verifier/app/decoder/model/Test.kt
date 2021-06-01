@@ -65,10 +65,9 @@ data class Test(
 
 ) : Serializable {
 
-    fun isTestValid(): Boolean {
-        return testResult == TestResult.NOT_DETECTED.value &&
-                parseToUtcTimestamp(dateTimeOfCollection).isBefore(OffsetDateTime.now())
-    }
+    fun isResultNegative(): Boolean = testResult == TestResult.NOT_DETECTED.value
+
+    fun isDateInThePast(): Boolean = parseToUtcTimestamp(dateTimeOfCollection).isBefore(OffsetDateTime.now())
 
     fun getTestResultType(): TestResult {
         return when (testResult) {
