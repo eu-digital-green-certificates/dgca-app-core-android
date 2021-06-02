@@ -35,19 +35,27 @@ data class VerificationResult(
 ) {
 
     fun isValid(): Boolean {
-        val isTestValid = testVerification?.isDetected ?: true
+        val isTestValid = testVerification?.isTestValid() ?: true
         return base45Decoded && zlibDecoded && coseVerified && cborDecoded && isSchemaValid && isTestValid &&
                 isIssuedTimeCorrect && isNotExpired
     }
 
     /**
-     * Checks if all the checks but signature validation passed.
-     * Ultimately value {@code true} returned by the method
-     * would mean that signature validation has been checked. And it failed.
+     * Checks if test hasn't been taken yet.
      */
-    fun isSignatureInvalid(): Boolean {
-        val isTestValid = testVerification?.isDetected ?: true
-        return (base45Decoded && zlibDecoded && cborDecoded && isSchemaValid && isTestValid) && !coseVerified
+    fun isTestDateInTheFuture(): Boolean = if (testVerification == null) {
+        false
+    } else {
+        !testVerification!!.isTestDateInThePast
+    }
+
+    /**
+     * Checks if verification is for the test, and related test result is {@code positive).
+     */
+    fun isTestWithPositiveResult(): Boolean = if (testVerification == null) {
+        false
+    } else {
+        !testVerification!!.isTestResultNegative
     }
 
     override fun toString(): String {
@@ -61,6 +69,6 @@ data class VerificationResult(
     }
 }
 
-data class TestVerificationResult(
-    val isDetected: Boolean
-)
+data class TestVerificationResult(val isTestResultNegative: Boolean, val isTestDateInThePast: Boolean) {
+    fun isTestValid(): Boolean = isTestResultNegative && isTestDateInThePast
+}
