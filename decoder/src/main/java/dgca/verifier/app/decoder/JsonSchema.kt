@@ -51,7 +51,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "      \"title\": \"Date of birth\",\n" +
         "      \"description\": \"Date of Birth of the person addressed in the DGC. ISO 8601 date format restricted to range 1900-2099\",\n" +
         "      \"type\": \"string\",\n" +
-        "      \"format\": \"date\",\n" +
+        "      \"pattern\": \"^(19|20)\\\\d{2}(-\\\\d{2}(-\\\\d{2}(T\\\\d{2}:\\\\d{2}:\\\\d{2})?)?)?\$\",\n" +
         "      \"examples\": [\n" +
         "        \"1979-04-14\"\n" +
         "      ]\n" +
