@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+    implementation project(':engine')
+
     implementation Deps.kotlin_stdlib
     implementation Deps.kotlin_reflect
     implementation Deps.java_cose
