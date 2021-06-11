@@ -22,10 +22,10 @@
 
 package dgca.verifier.app.decoder
 
+import android.util.Base64
 import java.nio.charset.StandardCharsets
 import java.security.PrivateKey
 import java.security.Signature
-import java.util.Base64
 
 fun generateClaimSignature(
     tanHash: String,
@@ -42,5 +42,5 @@ fun generateClaimSignature(
     signature.update(sigValue.toString().toByteArray(StandardCharsets.UTF_8))
     val sigData = signature.sign()
 
-    return Base64.getEncoder().encodeToString(sigData)
+    return Base64.encodeToString(sigData, Base64.NO_WRAP)
 }
