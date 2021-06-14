@@ -31,4 +31,6 @@ import dgca.verifier.app.decoder.model.VerificationResult
 interface CborService {
 
     fun decode(input: ByteArray, verificationResult: VerificationResult): GreenCertificate?
+
+    fun decodeData(input: ByteArray, verificationResult: VerificationResult): Pair<String, GreenCertificate>?
 }

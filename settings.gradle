@@ -1,4 +1,2 @@
 include ':decoder'
-include ':engine'
 rootProject.name = "dgca-app-core-android"
-project(':engine').projectDir = new File("../dgc-certlogic-android/engine")

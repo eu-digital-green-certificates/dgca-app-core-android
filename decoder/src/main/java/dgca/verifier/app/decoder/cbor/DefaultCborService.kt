@@ -34,26 +34,42 @@ import java.time.Instant
  */
 class DefaultCborService : CborService {
 
-    override fun decode(input: ByteArray, verificationResult: VerificationResult): GreenCertificate? {
+    private fun decodeCborObject(
+        input: ByteArray,
+        verificationResult: VerificationResult
+    ): CBORObject {
+        val map = CBORObject.DecodeFromBytes(input)
+
+        val issuedAt = Instant.ofEpochSecond(map[CwtHeaderKeys.ISSUED_AT.asCBOR()].AsInt64())
+        verificationResult.isIssuedTimeCorrect = issuedAt.isBefore(Instant.now())
+
+        val expirationTime = Instant.ofEpochSecond(map[CwtHeaderKeys.EXPIRATION.asCBOR()].AsInt64())
+        verificationResult.isNotExpired = expirationTime.isAfter(Instant.now())
+
+        val hcert = map[CwtHeaderKeys.HCERT.asCBOR()]
+        return hcert[CBORObject.FromObject(1)]
+    }
+
+    override fun decode(
+        input: ByteArray,
+        verificationResult: VerificationResult
+    ): GreenCertificate? = decodeData(input, verificationResult)?.second
+
+    override fun decodeData(
+        input: ByteArray,
+        verificationResult: VerificationResult
+    ): Pair<String, GreenCertificate>? {
         verificationResult.cborDecoded = false
-        try {
-            val map = CBORObject.DecodeFromBytes(input)
+        return try {
+            val cborObject = decodeCborObject(input, verificationResult)
+            val hcertv1 = cborObject.EncodeToBytes()
 
-            val issuedAt = Instant.ofEpochSecond(map[CwtHeaderKeys.ISSUED_AT.asCBOR()].AsInt64())
-            verificationResult.isIssuedTimeCorrect = issuedAt.isBefore(Instant.now())
-
-            val expirationTime = Instant.ofEpochSecond(map[CwtHeaderKeys.EXPIRATION.asCBOR()].AsInt64())
-            verificationResult.isNotExpired = expirationTime.isAfter(Instant.now())
-
-            val hcert = map[CwtHeaderKeys.HCERT.asCBOR()]
-            val hcertv1 = hcert[CBORObject.FromObject(1)].EncodeToBytes()
-
-            return CBORMapper()
+            val greenCertificate: GreenCertificate = CBORMapper()
                 .readValue(hcertv1, GreenCertificate::class.java)
                 .also { verificationResult.cborDecoded = true }
-
+            Pair(cborObject.toString(), greenCertificate)
         } catch (e: Throwable) {
-            return null
+            null
         }
     }
 }
