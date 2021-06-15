@@ -190,7 +190,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        \"dt\": {\n" +
         "          \"description\": \"Date of Vaccination\",\n" +
         "          \"type\": \"string\",\n" +
-        "          \"format\": \"date\",\n" +
+        "          \"format\": \"date-time\",\n" +
         "          \"\$comment\": \"SemanticSG: constrain to specific date range?\"\n" +
         "        },\n" +
         "        \"co\": {\n" +
@@ -288,7 +288,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        \"fr\": {\n" +
         "          \"description\": \"ISO 8601 Date of First Positive Test Result\",\n" +
         "          \"type\": \"string\",\n" +
-        "          \"format\": \"date\"\n" +
+        "          \"format\": \"date-time\"\n" +
         "        },\n" +
         "        \"co\": {\n" +
         "          \"description\": \"Country of Test\",\n" +
@@ -301,12 +301,12 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        \"df\": {\n" +
         "          \"description\": \"ISO 8601 Date: Certificate Valid From\",\n" +
         "          \"type\": \"string\",\n" +
-        "          \"format\": \"date\"\n" +
+        "          \"format\": \"date-time\"\n" +
         "        },\n" +
         "        \"du\": {\n" +
         "          \"description\": \"Certificate Valid Until\",\n" +
         "          \"type\": \"string\",\n" +
-        "          \"format\": \"date\"\n" +
+        "          \"format\": \"date-time\"\n" +
         "        },\n" +
         "        \"ci\": {\n" +
         "          \"description\": \"Unique Certificate Identifier, UVCI\",\n" +
