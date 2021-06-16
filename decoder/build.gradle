@@ -24,6 +24,7 @@ android {
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled = true
         sourceCompatibility Config.javaVersion
         targetCompatibility Config.javaVersion
     }
@@ -41,6 +42,8 @@ android {
 }
 
 dependencies {
+    coreLibraryDesugaring Deps.desugar_jdk_libs
+    
     implementation Deps.kotlin_stdlib
     implementation Deps.kotlin_reflect
     implementation Deps.java_cose
