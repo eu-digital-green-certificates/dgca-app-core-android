@@ -214,7 +214,6 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        \"tt\",\n" +
         "        \"sc\",\n" +
         "        \"tr\",\n" +
-        "        \"tc\",\n" +
         "        \"co\",\n" +
         "        \"is\",\n" +
         "        \"ci\"\n" +
