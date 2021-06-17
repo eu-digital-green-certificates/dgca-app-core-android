@@ -25,6 +25,7 @@ object Versions {
     // Base
     const val gradle = "4.1.3"
     const val kotlin = "1.4.32"
+    const val desugar_jdk_libs = "1.1.5"
 
     // Decoder
     const val kotlin_reflect = "1.4.32"

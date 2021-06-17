@@ -51,7 +51,6 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "      \"title\": \"Date of birth\",\n" +
         "      \"description\": \"Date of Birth of the person addressed in the DGC. ISO 8601 date format restricted to range 1900-2099\",\n" +
         "      \"type\": \"string\",\n" +
-        "      \"pattern\": \"^(19|20)\\\\d{2}(-\\\\d{2}(-\\\\d{2}(T\\\\d{2}:\\\\d{2}:\\\\d{2})?)?)?\$\",\n" +
         "      \"examples\": [\n" +
         "        \"1979-04-14\"\n" +
         "      ]\n" +
@@ -95,7 +94,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "    \"issuer\": {\n" +
         "      \"description\": \"Certificate Issuer\",\n" +
         "      \"type\": [\"null\", \"string\"],\n" +
-        "      \"maxLength\": 50\n" +
+        "      \"maxLength\": 80\n" +
         "    },\n" +
         "    \"person_name\": {\n" +
         "      \"description\": \"Person name: Surname(s), given name(s) - in that order\",\n" +
@@ -108,7 +107,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "          \"title\": \"Family name\",\n" +
         "          \"description\": \"The family or primary name(s) of the person addressed in the certificate\",\n" +
         "          \"type\": [\"null\", \"string\"],\n" +
-        "          \"maxLength\": 50,\n" +
+        "          \"maxLength\": 80,\n" +
         "          \"examples\": [\n" +
         "            \"d'Červenková Panklová\"\n" +
         "          ]\n" +
@@ -117,7 +116,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "          \"title\": \"Standardised family name\",\n" +
         "          \"description\": \"The family name(s) of the person transliterated\",\n" +
         "          \"type\": \"string\",\n" +
-        "          \"maxLength\": 50,\n" +
+        "          \"maxLength\": 80,\n" +
         "          \"examples\": [\n" +
         "            \"DCERVENKOVA<PANKLOVA\"\n" +
         "          ]\n" +
@@ -126,7 +125,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "          \"title\": \"Given name\",\n" +
         "          \"description\": \"The given name(s) of the person addressed in the certificate\",\n" +
         "          \"type\": [\"null\", \"string\"],\n" +
-        "          \"maxLength\": 50,\n" +
+        "          \"maxLength\": 80,\n" +
         "          \"examples\": [\n" +
         "            \"Jiřina-Maria Alena\"\n" +
         "          ]\n" +
@@ -135,7 +134,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "          \"title\": \"Standardised given name\",\n" +
         "          \"description\": \"The given name(s) of the person transliterated\",\n" +
         "          \"type\": [\"null\", \"string\"],\n" +
-        "          \"maxLength\": 50,\n" +
+        "          \"maxLength\": 80,\n" +
         "          \"examples\": [\n" +
         "            \"JIRINA<MARIA<ALENA\"\n" +
         "          ]\n" +
@@ -145,7 +144,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "    \"certificate_id\": {\n" +
         "      \"description\": \"Certificate Identifier, format as per UVCI: Annex 2 in  https://ec.europa.eu/health/sites/health/files/ehealth/docs/vaccination-proof_interoperability-guidelines_en.pdf\",\n" +
         "      \"type\": [\"null\", \"string\"],\n" +
-        "      \"maxLength\": 50\n" +
+        "      \"maxLength\": 80\n" +
         "    },\n" +
         "    \"vaccination_entry\": {\n" +
         "      \"description\": \"Vaccination Entry\",\n" +
@@ -214,7 +213,6 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        \"tt\",\n" +
         "        \"sc\",\n" +
         "        \"tr\",\n" +
-        "        \"tc\",\n" +
         "        \"co\",\n" +
         "        \"is\",\n" +
         "        \"ci\"\n" +
@@ -253,7 +251,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        \"tc\": {\n" +
         "          \"description\": \"Testing Centre\",\n" +
         "          \"type\": [\"null\", \"string\"],\n" +
-        "          \"maxLength\": 50\n" +
+        "          \"maxLength\": 80\n" +
         "        },\n" +
         "        \"co\": {\n" +
         "          \"description\": \"Country of Test\",\n" +

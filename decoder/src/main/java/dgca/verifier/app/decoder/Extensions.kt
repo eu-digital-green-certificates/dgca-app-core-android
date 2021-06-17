@@ -22,6 +22,7 @@
 
 package dgca.verifier.app.decoder
 
+import android.util.Base64
 import com.upokecenter.cbor.CBORObject
 import dgca.verifier.app.decoder.model.KeyPairData
 import java.io.ByteArrayInputStream
@@ -29,12 +30,11 @@ import java.security.KeyPairGenerator
 import java.security.MessageDigest
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
-import java.util.Base64
 
 const val ECDSA_256 = -7
 const val RSA_PSS_256 = -37
 
-fun ByteArray.toBase64(): String = Base64.getEncoder().encodeToString(this)
+fun ByteArray.toBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)
 
 fun ByteArray.toHexString(): String = joinToString("") { "%02x".format(it) }
 
@@ -42,10 +42,10 @@ fun String.hexToByteArray(): ByteArray = chunked(2)
     .map { it.toInt(16).toByte() }
     .toByteArray()
 
-fun String.fromBase64(): ByteArray = Base64.getDecoder().decode(this)
+fun String.fromBase64(): ByteArray = Base64.decode(this, Base64.NO_WRAP)
 
 fun String.base64ToX509Certificate(): X509Certificate? {
-    val decoded = Base64.getDecoder().decode(this)
+    val decoded = Base64.decode(this, Base64.NO_WRAP)
     val inputStream = ByteArrayInputStream(decoded)
 
     return CertificateFactory.getInstance("X.509").generateCertificate(inputStream) as? X509Certificate
