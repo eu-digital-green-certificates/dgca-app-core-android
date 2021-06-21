@@ -23,7 +23,11 @@
 package dgca.verifier.app.decoder.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.joda.time.DateTime
 import java.io.Serializable
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 data class RecoveryStatement(
 
@@ -49,3 +53,18 @@ data class RecoveryStatement(
     val certificateIdentifier: String
 
 ) : Serializable
+{
+    fun isDateInThePast(): Boolean = parseToUtcTimestamp(certificateValidUntil).isBeforeNow;
+
+    private fun parseToUtcTimestamp(value: String?): DateTime {
+        if (value.isNullOrEmpty()) {
+            return DateTime();
+        }
+
+        return try {
+          DateTime.parse(value);
+        } catch (ex: Exception) {
+            DateTime();
+        }
+    }
+}
