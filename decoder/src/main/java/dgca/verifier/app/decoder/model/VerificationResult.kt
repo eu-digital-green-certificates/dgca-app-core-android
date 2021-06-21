@@ -60,6 +60,12 @@ data class VerificationResult(
         !testVerification!!.isTestResultNegative
     }
 
+    fun isRecoveryInThePast(): Boolean = if (recoveryVerification == null) {
+        false
+    } else {
+        recoveryVerification!!.isRecoveryDateInThePast
+    }
+
     override fun toString(): String {
         return "VerificationResult: \n" +
                 "base45Decoded: $base45Decoded \n" +
