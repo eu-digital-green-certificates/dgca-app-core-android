@@ -76,5 +76,5 @@ data class TestVerificationResult(val isTestResultNegative: Boolean, val isTestD
 }
 
 data class RecoveryVerificationResult(val isRecoveryDateInThePast: Boolean) {
-    fun isRecoveryValid(): Boolean =  isRecoveryDateInThePast
+    fun isRecoveryValid(): Boolean =  !isRecoveryDateInThePast
 }
