@@ -60,24 +60,21 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "      \"type\": [\"null\", \"array\"],\n" +
         "      \"items\": {\n" +
         "        \"\$ref\": \"#/\$defs/vaccination_entry\"\n" +
-        "      },\n" +
-        "      \"minItems\": 1\n" +
+        "      }\n" +
         "    },\n" +
         "    \"t\": {\n" +
         "      \"description\": \"Test Group\",\n" +
         "      \"type\": [\"null\", \"array\"],\n" +
         "      \"items\": {\n" +
         "        \"\$ref\": \"#/\$defs/test_entry\"\n" +
-        "      },\n" +
-        "      \"minItems\": 1\n" +
+        "      }\n" +
         "    },\n" +
         "    \"r\": {\n" +
         "      \"description\": \"Recovery Group\",\n" +
         "      \"type\": [\"null\", \"array\"],\n" +
         "      \"items\": {\n" +
         "        \"\$ref\": \"#/\$defs/recovery_entry\"\n" +
-        "      },\n" +
-        "      \"minItems\": 1\n" +
+        "      }\n" +
         "    }\n" +
         "  },\n" +
         "  \"\$defs\": {\n" +
