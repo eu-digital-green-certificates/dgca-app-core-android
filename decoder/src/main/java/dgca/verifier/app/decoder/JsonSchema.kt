@@ -133,7 +133,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "    },\n" +
         "    \"certificate_id\": {\n" +
         "      \"description\": \"Certificate Identifier, format as per UVCI: Annex 2 in  https://ec.europa.eu/health/sites/health/files/ehealth/docs/vaccination-proof_interoperability-guidelines_en.pdf\",\n" +
-        "      \"type\": [\"null\", \"string\"],\n" +
+        "      \"type\": [\"null\", \"string\"]\n" +
         "    },\n" +
         "    \"vaccination_entry\": {\n" +
         "      \"description\": \"Vaccination Entry\",\n" +
@@ -213,7 +213,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        },\n" +
         "        \"tt\": {\n" +
         "          \"description\": \"Type of Test\",\n" +
-        "           \"type\": [\"null\", \"string\"]\n" +
+        "          \"type\": \"string\"\n" +
         "        },\n" +
         "        \"nm\": {\n" +
         "          \"description\": \"NAA Test Name\",\n" +
