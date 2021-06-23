@@ -60,32 +60,27 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "      \"type\": [\"null\", \"array\"],\n" +
         "      \"items\": {\n" +
         "        \"\$ref\": \"#/\$defs/vaccination_entry\"\n" +
-        "      },\n" +
-        "      \"minItems\": 1\n" +
+        "      }\n" +
         "    },\n" +
         "    \"t\": {\n" +
         "      \"description\": \"Test Group\",\n" +
         "      \"type\": [\"null\", \"array\"],\n" +
         "      \"items\": {\n" +
         "        \"\$ref\": \"#/\$defs/test_entry\"\n" +
-        "      },\n" +
-        "      \"minItems\": 1\n" +
+        "      }\n" +
         "    },\n" +
         "    \"r\": {\n" +
         "      \"description\": \"Recovery Group\",\n" +
         "      \"type\": [\"null\", \"array\"],\n" +
         "      \"items\": {\n" +
         "        \"\$ref\": \"#/\$defs/recovery_entry\"\n" +
-        "      },\n" +
-        "      \"minItems\": 1\n" +
+        "      }\n" +
         "    }\n" +
         "  },\n" +
         "  \"\$defs\": {\n" +
         "    \"dose_posint\": {\n" +
         "      \"description\": \"Dose Number / Total doses in Series: positive integer, range: [1,9]\",\n" +
-        "      \"type\": [\"null\", \"integer\"],\n" +
-        "      \"minimum\": 1,\n" +
-        "      \"maximum\": 9\n" +
+        "      \"type\": [\"null\", \"integer\"]\n" +
         "    },\n" +
         "    \"country_vt\": {\n" +
         "      \"description\": \"Country of Vaccination / Test, ISO 3166 where possible\",\n" +
@@ -93,8 +88,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "    },\n" +
         "    \"issuer\": {\n" +
         "      \"description\": \"Certificate Issuer\",\n" +
-        "      \"type\": [\"null\", \"string\"],\n" +
-        "      \"maxLength\": 80\n" +
+        "      \"type\": [\"null\", \"string\"]\n" +
         "    },\n" +
         "    \"person_name\": {\n" +
         "      \"description\": \"Person name: Surname(s), given name(s) - in that order\",\n" +
@@ -107,7 +101,6 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "          \"title\": \"Family name\",\n" +
         "          \"description\": \"The family or primary name(s) of the person addressed in the certificate\",\n" +
         "          \"type\": [\"null\", \"string\"],\n" +
-        "          \"maxLength\": 80,\n" +
         "          \"examples\": [\n" +
         "            \"d'Červenková Panklová\"\n" +
         "          ]\n" +
@@ -116,7 +109,6 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "          \"title\": \"Standardised family name\",\n" +
         "          \"description\": \"The family name(s) of the person transliterated\",\n" +
         "          \"type\": \"string\",\n" +
-        "          \"maxLength\": 80,\n" +
         "          \"examples\": [\n" +
         "            \"DCERVENKOVA<PANKLOVA\"\n" +
         "          ]\n" +
@@ -125,7 +117,6 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "          \"title\": \"Given name\",\n" +
         "          \"description\": \"The given name(s) of the person addressed in the certificate\",\n" +
         "          \"type\": [\"null\", \"string\"],\n" +
-        "          \"maxLength\": 80,\n" +
         "          \"examples\": [\n" +
         "            \"Jiřina-Maria Alena\"\n" +
         "          ]\n" +
@@ -134,7 +125,6 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "          \"title\": \"Standardised given name\",\n" +
         "          \"description\": \"The given name(s) of the person transliterated\",\n" +
         "          \"type\": [\"null\", \"string\"],\n" +
-        "          \"maxLength\": 80,\n" +
         "          \"examples\": [\n" +
         "            \"JIRINA<MARIA<ALENA\"\n" +
         "          ]\n" +
@@ -143,8 +133,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "    },\n" +
         "    \"certificate_id\": {\n" +
         "      \"description\": \"Certificate Identifier, format as per UVCI: Annex 2 in  https://ec.europa.eu/health/sites/health/files/ehealth/docs/vaccination-proof_interoperability-guidelines_en.pdf\",\n" +
-        "      \"type\": [\"null\", \"string\"],\n" +
-        "      \"maxLength\": 80\n" +
+        "      \"type\": [\"null\", \"string\"]\n" +
         "    },\n" +
         "    \"vaccination_entry\": {\n" +
         "      \"description\": \"Vaccination Entry\",\n" +
@@ -250,8 +239,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        },\n" +
         "        \"tc\": {\n" +
         "          \"description\": \"Testing Centre\",\n" +
-        "          \"type\": [\"null\", \"string\"],\n" +
-        "          \"maxLength\": 80\n" +
+        "          \"type\": [\"null\", \"string\"]\n" +
         "        },\n" +
         "        \"co\": {\n" +
         "          \"description\": \"Country of Test\",\n" +
