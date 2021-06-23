@@ -28,15 +28,24 @@ import dgca.verifier.app.decoder.cwt.CwtHeaderKeys
 import dgca.verifier.app.decoder.model.GreenCertificate
 import dgca.verifier.app.decoder.model.VerificationResult
 import java.time.Instant
+import java.time.ZoneOffset
 
 /**
  * Decodes input as a CBOR structure
  */
 class DefaultCborService : CborService {
 
-    override fun decode(input: ByteArray, verificationResult: VerificationResult): GreenCertificate? {
+    override fun decode(
+        input: ByteArray,
+        verificationResult: VerificationResult
+    ): GreenCertificate? = decodeData(input, verificationResult)?.greenCertificate
+
+    override fun decodeData(
+        input: ByteArray,
+        verificationResult: VerificationResult
+    ): GreenCertificateData? {
         verificationResult.cborDecoded = false
-        try {
+        return try {
             val map = CBORObject.DecodeFromBytes(input)
 
             val issuedAt = Instant.ofEpochSecond(map[CwtHeaderKeys.ISSUED_AT.asCBOR()].AsInt64())
@@ -46,14 +55,16 @@ class DefaultCborService : CborService {
             verificationResult.isNotExpired = expirationTime.isAfter(Instant.now())
 
             val hcert = map[CwtHeaderKeys.HCERT.asCBOR()]
-            val hcertv1 = hcert[CBORObject.FromObject(1)].EncodeToBytes()
 
-            return CBORMapper()
+            val cborObject = hcert[CBORObject.FromObject(1)]
+            val hcertv1 = cborObject.EncodeToBytes()
+
+            val greenCertificate: GreenCertificate = CBORMapper()
                 .readValue(hcertv1, GreenCertificate::class.java)
                 .also { verificationResult.cborDecoded = true }
-
+            GreenCertificateData(cborObject.toString(), greenCertificate, issuedAt.atZone(ZoneOffset.UTC), expirationTime.atZone(ZoneOffset.UTC))
         } catch (e: Throwable) {
-            return null
+            null
         }
     }
 }
