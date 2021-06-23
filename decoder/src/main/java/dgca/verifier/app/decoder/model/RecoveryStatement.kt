@@ -25,8 +25,7 @@ package dgca.verifier.app.decoder.model
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.joda.time.DateTime
 import java.io.Serializable
-import java.time.OffsetDateTime
-import java.time.ZoneOffset
+import java.time.*
 import java.time.format.DateTimeFormatter
 
 data class RecoveryStatement(
@@ -52,19 +51,36 @@ data class RecoveryStatement(
     @JsonProperty("ci")
     val certificateIdentifier: String
 
-) : Serializable
-{
-    fun isDateInThePast(): Boolean = parseToUtcTimestamp(certificateValidUntil).isBeforeNow;
-
-    private fun parseToUtcTimestamp(value: String?): DateTime {
-        if (value.isNullOrEmpty()) {
-            return DateTime();
-        }
-
-        return try {
-          DateTime.parse(value);
-        } catch (ex: Exception) {
-            DateTime();
-        }
+) : Serializable {
+    companion object {
+        private val UTC_ZONE_ID: ZoneId = ZoneId.ofOffset("", ZoneOffset.UTC).normalized()
     }
+
+    fun isCertificateNotValidAnymore(): Boolean? =
+        certificateValidUntil.toZonedDateTimeOrUtcLocal()?.isBefore(ZonedDateTime.now())
+
+    fun isCertificateNotValidSoFar(): Boolean? =
+        certificateValidFrom.toZonedDateTimeOrUtcLocal()?.isAfter(ZonedDateTime.now())
+
+    private fun String.toZonedDateTime(): ZonedDateTime? = try {
+        ZonedDateTime.parse(this)
+    } catch (error: Throwable) {
+        null
+    }
+
+    private fun String.toLocalDateTime(): LocalDateTime? = try {
+        LocalDateTime.parse(this)
+    } catch (error: Throwable) {
+        null
+    }
+
+    private fun String.toLocalDate(): LocalDate? = try {
+        LocalDate.parse(this)
+    } catch (error: Throwable) {
+        null
+    }
+
+    private fun String.toZonedDateTimeOrUtcLocal(): ZonedDateTime? =
+        this.toZonedDateTime()?.withZoneSameInstant(UTC_ZONE_ID) ?: this.toLocalDateTime()
+            ?.atZone(UTC_ZONE_ID) ?: this.toLocalDate()?.atStartOfDay(UTC_ZONE_ID)
 }
