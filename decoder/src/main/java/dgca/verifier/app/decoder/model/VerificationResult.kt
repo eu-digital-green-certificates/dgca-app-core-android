@@ -31,6 +31,7 @@ data class VerificationResult(
     var isSchemaValid: Boolean = false,
     var isIssuedTimeCorrect: Boolean = false,
     var isNotExpired: Boolean = false,
+    var rulesValidationFailed: Boolean = false,
     var testVerification: TestVerificationResult? = null,
     var recoveryVerification: RecoveryVerificationResult? = null
 ) {
@@ -39,7 +40,7 @@ data class VerificationResult(
         val isTestValid = testVerification?.isTestValid() ?: true
         val isRecoveryValid = recoveryVerification?.isRecoveryValid() ?: true;
         return base45Decoded && zlibDecoded && coseVerified && cborDecoded && isSchemaValid && isTestValid &&
-                isIssuedTimeCorrect && isNotExpired && isRecoveryValid;
+                isIssuedTimeCorrect && isNotExpired && !rulesValidationFailed && isRecoveryValid
     }
 
     /**

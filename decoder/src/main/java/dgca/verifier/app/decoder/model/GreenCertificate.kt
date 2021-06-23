@@ -24,6 +24,7 @@ package dgca.verifier.app.decoder.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.io.Serializable
+import java.util.*
 
 /**
  * CBOR structure of the certificate
@@ -62,4 +63,15 @@ data class GreenCertificate(
             ""
         }
     }
+
+    fun getIssuingCountry(): String = try {
+        when {
+            vaccinations?.isNotEmpty() == true -> vaccinations.last().countryOfVaccination
+            tests?.isNotEmpty() == true -> tests.last().countryOfVaccination
+            recoveryStatements?.isNotEmpty() == true -> recoveryStatements.last().countryOfVaccination
+            else -> ""
+        }
+    } catch (ex: Exception) {
+        ""
+    }.toLowerCase(Locale.ROOT)
 }
