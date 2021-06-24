@@ -61,10 +61,16 @@ data class VerificationResult(
         !testVerification!!.isTestResultNegative
     }
 
-    fun isRecoveryInThePast(): Boolean = if (recoveryVerification == null) {
+    fun isRecoveryNotValidAnymore(): Boolean = if (recoveryVerification == null) {
         false
     } else {
-        recoveryVerification!!.isRecoveryDateInThePast
+        recoveryVerification!!.isNotValidAnymore
+    }
+
+    fun isRecoveryNotValidSoFar(): Boolean = if (recoveryVerification == null) {
+        false
+    } else {
+        recoveryVerification!!.isNotValidSoFar
     }
 
     override fun toString(): String {
@@ -82,6 +88,6 @@ data class TestVerificationResult(val isTestResultNegative: Boolean, val isTestD
     fun isTestValid(): Boolean = isTestResultNegative && isTestDateInThePast
 }
 
-data class RecoveryVerificationResult(val isRecoveryDateInThePast: Boolean) {
-    fun isRecoveryValid(): Boolean =  !isRecoveryDateInThePast
+data class RecoveryVerificationResult(val isNotValidSoFar: Boolean, val isNotValidAnymore: Boolean) {
+    fun isRecoveryValid() = !isNotValidSoFar && !isNotValidAnymore
 }
