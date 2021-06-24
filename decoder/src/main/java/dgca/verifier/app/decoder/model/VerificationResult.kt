@@ -32,13 +32,15 @@ data class VerificationResult(
     var isIssuedTimeCorrect: Boolean = false,
     var isNotExpired: Boolean = false,
     var rulesValidationFailed: Boolean = false,
-    var testVerification: TestVerificationResult? = null
+    var testVerification: TestVerificationResult? = null,
+    var recoveryVerification: RecoveryVerificationResult? = null
 ) {
 
     fun isValid(): Boolean {
         val isTestValid = testVerification?.isTestValid() ?: true
+        val isRecoveryValid = recoveryVerification?.isRecoveryValid() ?: true;
         return base45Decoded && zlibDecoded && coseVerified && cborDecoded && isSchemaValid && isTestValid &&
-                isIssuedTimeCorrect && isNotExpired && !rulesValidationFailed
+                isIssuedTimeCorrect && isNotExpired && !rulesValidationFailed && isRecoveryValid
     }
 
     /**
@@ -59,6 +61,18 @@ data class VerificationResult(
         !testVerification!!.isTestResultNegative
     }
 
+    fun isRecoveryNotValidAnymore(): Boolean = if (recoveryVerification == null) {
+        false
+    } else {
+        recoveryVerification!!.isNotValidAnymore
+    }
+
+    fun isRecoveryNotValidSoFar(): Boolean = if (recoveryVerification == null) {
+        false
+    } else {
+        recoveryVerification!!.isNotValidSoFar
+    }
+
     override fun toString(): String {
         return "VerificationResult: \n" +
                 "base45Decoded: $base45Decoded \n" +
@@ -72,4 +86,8 @@ data class VerificationResult(
 
 data class TestVerificationResult(val isTestResultNegative: Boolean, val isTestDateInThePast: Boolean) {
     fun isTestValid(): Boolean = isTestResultNegative && isTestDateInThePast
+}
+
+data class RecoveryVerificationResult(val isNotValidSoFar: Boolean, val isNotValidAnymore: Boolean) {
+    fun isRecoveryValid() = !isNotValidSoFar && !isNotValidAnymore
 }

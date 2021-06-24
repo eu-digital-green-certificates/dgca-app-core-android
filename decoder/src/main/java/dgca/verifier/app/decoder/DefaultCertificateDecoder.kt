@@ -26,6 +26,7 @@ import COSE.HeaderKeys
 import com.fasterxml.jackson.dataformat.cbor.databind.CBORMapper
 import com.upokecenter.cbor.CBORObject
 import dgca.verifier.app.decoder.base45.Base45Decoder
+import dgca.verifier.app.decoder.cose.CoseService
 import dgca.verifier.app.decoder.cwt.CwtHeaderKeys
 import dgca.verifier.app.decoder.model.CoseData
 import dgca.verifier.app.decoder.model.GreenCertificate
@@ -87,7 +88,13 @@ class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder) :
         val messageObject = CBORObject.DecodeFromBytes(this)
         val content = messageObject[2].GetByteString()
         val rgbProtected = messageObject[0].GetByteString()
+        var rgbUnprotected = messageObject[1];
         val key = HeaderKeys.KID.AsCBOR()
+
+        if(!CBORObject.DecodeFromBytes(rgbProtected).keys.contains(key)) {
+            val objunprotected = rgbUnprotected.get(key).GetByteString()
+            return CoseData(content, objunprotected)
+        }
         val objProtected = CBORObject.DecodeFromBytes(rgbProtected).get(key).GetByteString()
         return CoseData(content, objProtected)
     }
