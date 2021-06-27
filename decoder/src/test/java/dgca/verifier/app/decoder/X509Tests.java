@@ -18,6 +18,7 @@ public class X509Tests {
         Assert.assertTrue(x509.checkisSuitable(certificate, CertificateType.RECOVERY));
         Assert.assertTrue(x509.checkisSuitable(certificate, CertificateType.TEST));
         Assert.assertTrue(x509.checkisSuitable(certificate, CertificateType.VACCINATION));
+        Assert.assertFalse(x509.checkisSuitable(certificate, CertificateType.UNKNOWN));
     }
 
     @Test
@@ -30,7 +31,7 @@ public class X509Tests {
         Assert.assertFalse(x509.checkisSuitable(certificate, CertificateType.RECOVERY));
         Assert.assertTrue(x509.checkisSuitable(certificate, CertificateType.TEST));
         Assert.assertTrue(x509.checkisSuitable(certificate, CertificateType.VACCINATION));
-
+        Assert.assertFalse(x509.checkisSuitable(certificate, CertificateType.UNKNOWN));
     }
 
     @Test
@@ -43,6 +44,7 @@ public class X509Tests {
         Assert.assertTrue(x509.checkisSuitable(certificate, CertificateType.RECOVERY));
         Assert.assertFalse(x509.checkisSuitable(certificate, CertificateType.TEST));
         Assert.assertFalse(x509.checkisSuitable(certificate, CertificateType.VACCINATION));
+        Assert.assertFalse(x509.checkisSuitable(certificate, CertificateType.UNKNOWN));
     }
 
     @Test
@@ -55,6 +57,7 @@ public class X509Tests {
         Assert.assertFalse(x509.checkisSuitable(certificate, CertificateType.RECOVERY));
         Assert.assertFalse(x509.checkisSuitable(certificate, CertificateType.TEST));
         Assert.assertTrue(x509.checkisSuitable(certificate, CertificateType.VACCINATION));
+        Assert.assertFalse(x509.checkisSuitable(certificate, CertificateType.UNKNOWN));
     }
 
     @Test
@@ -67,6 +70,7 @@ public class X509Tests {
         Assert.assertFalse(x509.checkisSuitable(certificate, CertificateType.RECOVERY));
         Assert.assertTrue(x509.checkisSuitable(certificate, CertificateType.TEST));
         Assert.assertFalse(x509.checkisSuitable(certificate, CertificateType.VACCINATION));
+        Assert.assertFalse(x509.checkisSuitable(certificate, CertificateType.UNKNOWN));
     }
 
     @Test
@@ -79,6 +83,7 @@ public class X509Tests {
         Assert.assertTrue(x509.checkisSuitable(certificate, CertificateType.RECOVERY));
         Assert.assertTrue(x509.checkisSuitable(certificate, CertificateType.TEST));
         Assert.assertTrue(x509.checkisSuitable(certificate, CertificateType.VACCINATION));
+        Assert.assertTrue(x509.checkisSuitable(certificate, CertificateType.UNKNOWN));
     }
 
 }

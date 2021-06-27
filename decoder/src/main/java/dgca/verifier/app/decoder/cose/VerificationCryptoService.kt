@@ -26,6 +26,7 @@ import com.upokecenter.cbor.CBORObject
 import dgca.verifier.app.decoder.ECDSA_256
 import dgca.verifier.app.decoder.RSA_PSS_256
 import dgca.verifier.app.decoder.convertToDer
+import dgca.verifier.app.decoder.model.CertificateType
 import dgca.verifier.app.decoder.model.VerificationResult
 import dgca.verifier.app.decoder.verify
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo
@@ -35,7 +36,7 @@ import java.security.Security
 import java.security.Signature
 import java.security.cert.Certificate
 import java.security.spec.RSAPublicKeySpec
-
+import dgca.verifier.app.decoder.services.X509
 /**
  * Verifies COSE signature
  */
@@ -43,6 +44,20 @@ class VerificationCryptoService : CryptoService {
 
     init {
         Security.addProvider(BouncyCastleProvider()) // for SHA256withRSA/PSS
+    }
+
+    override fun validate(
+        cose: ByteArray,
+        certificate: Certificate,
+        verificationResult: VerificationResult,
+        certificateType: CertificateType
+    ) {
+        var x509 = X509()
+
+        validate(cose,certificate,verificationResult)
+
+        if( certificateType != CertificateType.UNKNOWN)
+          verificationResult.coseVerified = verificationResult.coseVerified && x509.isSuitable(certificate.encoded,certificateType)
     }
 
     override fun validate(cose: ByteArray, certificate: Certificate, verificationResult: VerificationResult) {

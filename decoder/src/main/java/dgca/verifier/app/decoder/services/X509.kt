@@ -29,6 +29,7 @@ class X509 {
                     CertificateType.TEST-> return extendedKeys.contains(OID_TEST) || extendedKeys.contains(OID_ALT_TEST)
                     CertificateType.VACCINATION -> return extendedKeys.contains(OID_VACCINATION) || extendedKeys.contains(OID_ALT_VACCINATION)
                     CertificateType.RECOVERY -> return extendedKeys.contains(OID_RECOVERY) || extendedKeys.contains(OID_ALT_RECOVERY)
+                    CertificateType.UNKNOWN -> return false;
                 }
             }
         } catch (e: CertificateException) {

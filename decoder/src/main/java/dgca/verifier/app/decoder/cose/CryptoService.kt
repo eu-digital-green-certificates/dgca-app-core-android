@@ -22,6 +22,7 @@
 
 package dgca.verifier.app.decoder.cose
 
+import dgca.verifier.app.decoder.model.CertificateType
 import dgca.verifier.app.decoder.model.VerificationResult
 import java.security.cert.Certificate
 
@@ -31,4 +32,5 @@ import java.security.cert.Certificate
 interface CryptoService {
 
     fun validate(cose: ByteArray, certificate: Certificate, verificationResult: VerificationResult)
+    fun validate(cose: ByteArray, certificate: Certificate, verificationResult: VerificationResult, certificateType: CertificateType)
 }

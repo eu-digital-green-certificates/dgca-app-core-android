@@ -66,7 +66,7 @@ public class QrCodeTests {
             return false;
         }
 
-        cryptoService.validate(cose,cert,result);
+        cryptoService.validate(cose,cert,result,greenCertificate.getType());
 
         return result.isValid();
     }
