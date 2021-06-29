@@ -36,6 +36,7 @@ sealed class CwtHeaderKeys(value: Int) {
         return value
     }
 
+    object ISSUING_COUNTRY : CwtHeaderKeys(1)
     object EXPIRATION : CwtHeaderKeys(4)
     object ISSUED_AT : CwtHeaderKeys(6)
     object HCERT : CwtHeaderKeys(-260)
