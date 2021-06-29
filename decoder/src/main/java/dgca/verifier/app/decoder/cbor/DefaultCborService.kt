@@ -48,6 +48,8 @@ class DefaultCborService : CborService {
         return try {
             val map = CBORObject.DecodeFromBytes(input)
 
+            val issuingCountry: String? = map[CwtHeaderKeys.ISSUING_COUNTRY.asCBOR()]?.AsString()
+
             val issuedAt = Instant.ofEpochSecond(map[CwtHeaderKeys.ISSUED_AT.asCBOR()].AsInt64())
             verificationResult.isIssuedTimeCorrect = issuedAt.isBefore(Instant.now())
 
@@ -62,7 +64,7 @@ class DefaultCborService : CborService {
             val greenCertificate: GreenCertificate = CBORMapper()
                 .readValue(hcertv1, GreenCertificate::class.java)
                 .also { verificationResult.cborDecoded = true }
-            GreenCertificateData(cborObject.toString(), greenCertificate, issuedAt.atZone(ZoneOffset.UTC), expirationTime.atZone(ZoneOffset.UTC))
+            GreenCertificateData(issuingCountry, cborObject.toString(), greenCertificate, issuedAt.atZone(ZoneOffset.UTC), expirationTime.atZone(ZoneOffset.UTC))
         } catch (e: Throwable) {
             null
         }
