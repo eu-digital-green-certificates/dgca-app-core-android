@@ -75,11 +75,11 @@ data class GreenCertificate(
         ""
     }.toLowerCase(Locale.ROOT)
 
-    fun getType():CertificateType {
-      if(vaccinations?.isNotEmpty() == true)
-          return CertificateType.VACCINATION
-        if(tests?.isNotEmpty() == true) return CertificateType.TEST
-            if(recoveryStatements?.isNotEmpty() == true) return CertificateType.RECOVERY
+    fun getType(): CertificateType {
+        if (vaccinations?.isNotEmpty() == true)
+            return CertificateType.VACCINATION
+        if (tests?.isNotEmpty() == true) return CertificateType.TEST
+        if (recoveryStatements?.isNotEmpty() == true) return CertificateType.RECOVERY
         return CertificateType.UNKNOWN
-        }
+    }
 }
