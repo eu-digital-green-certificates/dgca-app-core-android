@@ -28,6 +28,7 @@ import dgca.verifier.app.decoder.RSA_PSS_256
 import dgca.verifier.app.decoder.convertToDer
 import dgca.verifier.app.decoder.model.CertificateType
 import dgca.verifier.app.decoder.model.VerificationResult
+import dgca.verifier.app.decoder.services.X509
 import dgca.verifier.app.decoder.verify
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo
 import org.bouncycastle.jce.provider.BouncyCastleProvider
@@ -36,11 +37,11 @@ import java.security.Security
 import java.security.Signature
 import java.security.cert.Certificate
 import java.security.spec.RSAPublicKeySpec
-import dgca.verifier.app.decoder.services.X509
+
 /**
  * Verifies COSE signature
  */
-class VerificationCryptoService : CryptoService {
+class VerificationCryptoService(private val x509: X509) : CryptoService {
 
     init {
         Security.addProvider(BouncyCastleProvider()) // for SHA256withRSA/PSS
@@ -52,15 +53,20 @@ class VerificationCryptoService : CryptoService {
         verificationResult: VerificationResult,
         certificateType: CertificateType
     ) {
-        var x509 = X509()
+        validate(cose, certificate, verificationResult)
 
-        validate(cose,certificate,verificationResult)
-
-        if( certificateType != CertificateType.UNKNOWN)
-          verificationResult.coseVerified = verificationResult.coseVerified && x509.isSuitable(certificate.encoded,certificateType)
+        verificationResult.coseVerified =
+            verificationResult.coseVerified && (certificateType == CertificateType.UNKNOWN || x509.isSuitable(
+                certificate.encoded,
+                certificateType
+            ))
     }
 
-    override fun validate(cose: ByteArray, certificate: Certificate, verificationResult: VerificationResult) {
+    override fun validate(
+        cose: ByteArray,
+        certificate: Certificate,
+        verificationResult: VerificationResult
+    ) {
         val verificationKey = certificate.publicKey
         verificationResult.coseVerified = try {
             val messageObject = CBORObject.DecodeFromBytes(cose)
@@ -81,7 +87,8 @@ class VerificationCryptoService : CryptoService {
                     )
                 }
                 RSA_PSS_256 -> {
-                    val bytes = SubjectPublicKeyInfo.getInstance(certificate.publicKey.encoded).publicKeyData.bytes
+                    val bytes =
+                        SubjectPublicKeyInfo.getInstance(certificate.publicKey.encoded).publicKeyData.bytes
                     val rsaPublicKey = org.bouncycastle.asn1.pkcs.RSAPublicKey.getInstance(bytes)
                     val spec = RSAPublicKeySpec(rsaPublicKey.modulus, rsaPublicKey.publicExponent)
                     val key = KeyFactory.getInstance("RSA").generatePublic(spec)

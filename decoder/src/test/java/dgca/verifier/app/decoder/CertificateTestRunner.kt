@@ -17,6 +17,7 @@ import dgca.verifier.app.decoder.prefixvalidation.DefaultPrefixValidationService
 import dgca.verifier.app.decoder.prefixvalidation.PrefixValidationService
 import dgca.verifier.app.decoder.schema.DefaultSchemaValidator
 import dgca.verifier.app.decoder.schema.SchemaValidator
+import dgca.verifier.app.decoder.services.X509
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.CoreMatchers.nullValue
@@ -45,7 +46,7 @@ class CertificateTestRunner {
         prefixValidationService = DefaultPrefixValidationService()
         base45Service = DefaultBase45Service()
         compressorService = DefaultCompressorService()
-        cryptoService = VerificationCryptoService()
+        cryptoService = VerificationCryptoService(X509())
         coseService = DefaultCoseService()
         schemaValidator = DefaultSchemaValidator()
         cborService = DefaultCborService()
