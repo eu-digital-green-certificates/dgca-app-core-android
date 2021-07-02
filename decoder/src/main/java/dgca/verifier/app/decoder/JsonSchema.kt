@@ -178,7 +178,6 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        \"dt\": {\n" +
         "          \"description\": \"Date of Vaccination\",\n" +
         "          \"type\": \"string\",\n" +
-        "          \"format\": \"date\",\n" +
         "          \"\$comment\": \"SemanticSG: constrain to specific date range?\"\n" +
         "        },\n" +
         "        \"co\": {\n" +
@@ -225,13 +224,11 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        },\n" +
         "        \"sc\": {\n" +
         "          \"description\": \"Date/Time of Sample Collection\",\n" +
-        "          \"type\": \"string\",\n" +
-        "          \"format\": \"date-time\"\n" +
+        "          \"type\": \"string\"\n" +
         "        },\n" +
         "        \"dr\": {\n" +
         "          \"description\": \"Date/Time of Test Result\",\n" +
-        "          \"type\": [\"null\", \"string\"],\n" +
-        "          \"format\": \"date-time\"\n" +
+        "          \"type\": [\"null\", \"string\"]\n" +
         "        },\n" +
         "        \"tr\": {\n" +
         "          \"description\": \"Test Result\",\n" +
@@ -273,8 +270,7 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        },\n" +
         "        \"fr\": {\n" +
         "          \"description\": \"ISO 8601 Date of First Positive Test Result\",\n" +
-        "          \"type\": \"string\",\n" +
-        "          \"format\": \"date\"\n" +
+        "          \"type\": \"string\"\n" +
         "        },\n" +
         "        \"co\": {\n" +
         "          \"description\": \"Country of Test\",\n" +
@@ -286,13 +282,11 @@ const val JSON_SCHEMA_V1 = "{\n" +
         "        },\n" +
         "        \"df\": {\n" +
         "          \"description\": \"ISO 8601 Date: Certificate Valid From\",\n" +
-        "          \"type\": \"string\",\n" +
-        "          \"format\": \"date\"\n" +
+        "          \"type\": \"string\"\n" +
         "        },\n" +
         "        \"du\": {\n" +
         "          \"description\": \"Certificate Valid Until\",\n" +
-        "          \"type\": \"string\",\n" +
-        "          \"format\": \"date\"\n" +
+        "          \"type\": \"string\"\n" +
         "        },\n" +
         "        \"ci\": {\n" +
         "          \"description\": \"Unique Certificate Identifier, UVCI\",\n" +
