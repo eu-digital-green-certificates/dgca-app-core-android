@@ -1,5 +1,6 @@
 package dgca.verifier.app.decoder
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import dgca.verifier.app.decoder.base45.Base45Decoder
 import dgca.verifier.app.decoder.base45.Base45Service
 import dgca.verifier.app.decoder.base45.DefaultBase45Service
@@ -17,9 +18,11 @@ import dgca.verifier.app.decoder.prefixvalidation.PrefixValidationService
 import dgca.verifier.app.decoder.schema.DefaultSchemaValidator
 import dgca.verifier.app.decoder.schema.SchemaValidator
 import dgca.verifier.app.decoder.services.X509
+import org.junit.Assert
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.ByteArrayInputStream
+import java.io.IOException
 import java.io.InputStream
 import java.security.cert.CertificateException
 import java.security.cert.CertificateFactory
@@ -119,5 +122,29 @@ class QrCodeTests {
         val pubkey =
             "MIIBzDCCAXGgAwIBAgIUDN8nWnn8gBmlWgL3stwhoinVD5MwCgYIKoZIzj0EAwIwIDELMAkGA1UEBhMCR1IxETAPBgNVBAMMCGdybmV0LmdyMB4XDTIxMDUxMjExMjY1OFoXDTIzMDUxMjExMjY1OFowIDELMAkGA1UEBhMCR1IxETAPBgNVBAMMCGdybmV0LmdyMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEBcc6ApRZrh9/qCuMnxIRpUujI19bKkG+agj/6rPOiX8VyzfWvhptzV0149AFRWdSoF/NVuQyFcrBoNBqL9zCAqOBiDCBhTAOBgNVHQ8BAf8EBAMCB4AwHQYDVR0OBBYEFN6ZiC57J/yRqTJ/Tg2eRspLCHDhMB8GA1UdIwQYMBaAFNU5HfWNY37TbdZjvsvO+1y1LPJYMDMGA1UdJQQsMCoGDCsGAQQBAI43j2UBAQYMKwYBBAEAjjePZQECBgwrBgEEAQCON49lAQMwCgYIKoZIzj0EAwIDSQAwRgIhAN6rDdE4mtTt2ZuffpZ242/B0lmyvdd+Wy6VuX+J/b01AiEAvME52Y4zqkQDuj2kbfCfs+h3uwYFOepoBP14X+Rd/VM="
         assertTrue(verify(hCert, pubkey))
+    }
+
+    @Test
+    fun testTaggedJsonCreation() {
+        val hCert =
+            "HC1:NCFOXNYTSFDHJI8Y0PJ3F1BRV+4$61FI1\$B3LR5XW9G81OGI9JLPZ5M*4MCE AOCV4*XUA2P9FH4%HNTI4L6N\$Q%UG/YL WO*Z7ON1.-LDJ82T9BZJR+HS3WPQO9E4GI8SL0.T70%NUE0J-J:PICIG2R44$2585UN06R2.+K6-CI3J -2DP4TO212JSH0%KNYGFO-O/HLHHJ0GHLHFJW25LO3E8PON QEQ\$HCPPIRH7VHOW2TP9XOA 68ZBG*:J5QNP/IUC7O54TB5PJH+IFO-ON48SU2NUBVYJA.GYS6KRPP+PI+QPRSV-GV*OIUSXQ2SYKLV03RVPCEZY6FNH9.1659Y73JC3DG34LT%F352386B-E3.FJ3LT323UR8K%IU3BSXG NN2*BXEU-IL/UC8AE0VKKWNONG-TL 7928OJCGA7IB9NQ8L59L1PC0D9E2LBHHGKLO-K%FG5IAMEADII-GG\$GKIGQA K%KIO4KPK6PK6F\$BG+SB.V4Q5.AK2EQ6YBK S*%NH\$RSC9KIFX80S\$CKX85JLL%IR299 T757A0L /K1:SY70R61M0VWP0FDA4JBSC9HAG-BJDCI-TL-VC4SLW HPOJZ0K PIS\$S0O29T2*ZE6WUAKEG%5TW5A 6YO67N65VC561CSS2+K/KVMAWCUPK-BT-QYFRZJNU 54*A*K66.AORVFCV.YJ72V34K:1BT1GIFE\$EUXNL606KQHEPB/%9YE96.R L7CRAYIO8MRVBWHLV%.P*YSNDM/0HBZVC*IP:2JIJD:61E77%NT9J3-S726O/5U3F$1CJYV0BSLPS/*D-YN%N4:2FSEQMQUHL5W RXWS-ARH.NMVRUNBYWI8:V29AKXTN2Q:ULZ0SM-F\$JU-0R0J3+TUSVU4FB22N+9BQA8TTT:-6: 6YAN.6W8LBX/CC3BM 24CO6WJM4P8QE0M8XY29B93GQ*AE%/9WH2DI7U2VLW1B3B1:JD%70\$AK%D.R6/NF%LCIWLO.B0DR6OMZHUDOQBP6OU9G3WL/VH:TT07QQU2FOQKLRF5E8VTH7/WR6Y0*:B%75"
+        val result = VerificationResult()
+        val b45Service: Base45Service = DefaultBase45Service()
+        val prefService: PrefixValidationService = DefaultPrefixValidationService()
+        val compressorService: CompressorService = DefaultCompressorService()
+        val validator: SchemaValidator = DefaultSchemaValidator()
+        val coseservice: CoseService = DefaultCoseService()
+        val cborservice: CborService = DefaultCborService()
+        val base45 = prefService.decode(hCert, result)
+        val compressed = b45Service.decode(base45, result)
+        val cose = compressorService.decode(compressed, result)
+        val cbor = coseservice.decode(cose, result)
+        val greenCertificate = cborservice.decodeData(cbor!!.cbor, result)
+        try {
+            val mapper = ObjectMapper()
+            mapper.readTree(greenCertificate!!.hcertJson)
+        } catch (e: IOException) {
+            Assert.fail()
+        }
     }
 }

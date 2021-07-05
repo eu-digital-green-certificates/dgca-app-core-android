@@ -64,7 +64,7 @@ class DefaultCborService : CborService {
             val greenCertificate: GreenCertificate = CBORMapper()
                 .readValue(hcertv1, GreenCertificate::class.java)
                 .also { verificationResult.cborDecoded = true }
-            GreenCertificateData(issuingCountry, cborObject.toString(), greenCertificate, issuedAt.atZone(ZoneOffset.UTC), expirationTime.atZone(ZoneOffset.UTC))
+            GreenCertificateData(issuingCountry, cborObject.ToJSONString(), greenCertificate, issuedAt.atZone(ZoneOffset.UTC), expirationTime.atZone(ZoneOffset.UTC))
         } catch (e: Throwable) {
             null
         }
