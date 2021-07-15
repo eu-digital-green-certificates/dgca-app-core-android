@@ -26,11 +26,9 @@ import COSE.HeaderKeys
 import com.fasterxml.jackson.dataformat.cbor.databind.CBORMapper
 import com.upokecenter.cbor.CBORObject
 import dgca.verifier.app.decoder.base45.Base45Decoder
-import dgca.verifier.app.decoder.cose.CoseService
 import dgca.verifier.app.decoder.cwt.CwtHeaderKeys
 import dgca.verifier.app.decoder.model.CoseData
 import dgca.verifier.app.decoder.model.GreenCertificate
-import java.time.Instant
 import java.util.zip.InflaterInputStream
 
 @ExperimentalUnsignedTypes
@@ -88,10 +86,10 @@ class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder) :
         val messageObject = CBORObject.DecodeFromBytes(this)
         val content = messageObject[2].GetByteString()
         val rgbProtected = messageObject[0].GetByteString()
-        var rgbUnprotected = messageObject[1];
+        val rgbUnprotected = messageObject[1]
         val key = HeaderKeys.KID.AsCBOR()
 
-        if(!CBORObject.DecodeFromBytes(rgbProtected).keys.contains(key)) {
+        if (!CBORObject.DecodeFromBytes(rgbProtected).keys.contains(key)) {
             val objunprotected = rgbUnprotected.get(key).GetByteString()
             return CoseData(content, objunprotected)
         }
@@ -101,13 +99,6 @@ class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder) :
 
     private fun ByteArray.decodeGreenCertificate(): GreenCertificate? {
         val map = CBORObject.DecodeFromBytes(this)
-
-        val issuedAt = Instant.ofEpochSecond(map[CwtHeaderKeys.ISSUED_AT.asCBOR()].AsInt64())
-        if (issuedAt.isAfter(Instant.now())) throw IllegalArgumentException("IssuedAt not correct: $issuedAt")
-
-        val expirationTime = Instant.ofEpochSecond(map[CwtHeaderKeys.EXPIRATION.asCBOR()].AsInt64())
-        if (expirationTime.isBefore(Instant.now())) throw IllegalArgumentException("Expiration not correct: $expirationTime")
-
         val hcert = map[CwtHeaderKeys.HCERT.asCBOR()]
         val hcertv1 = hcert[CBORObject.FromObject(1)].EncodeToBytes()
 
