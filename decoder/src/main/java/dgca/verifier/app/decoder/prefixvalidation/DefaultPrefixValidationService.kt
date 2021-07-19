@@ -33,4 +33,9 @@ class DefaultPrefixValidationService(private val prefix: String = "HC1:") : Pref
         input.startsWith(prefix) -> input.drop(prefix.length).also { verificationResult.contextPrefix = prefix }
         else -> input.also { verificationResult.contextPrefix = null }
     }
+
+    override fun encode(input: String): String = when {
+        input.startsWith(prefix) -> input
+        else -> "$prefix$input"
+    }
 }
