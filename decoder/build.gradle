@@ -43,12 +43,13 @@ android {
 
 dependencies {
     coreLibraryDesugaring Deps.desugar_jdk_libs
-    
+
     implementation Deps.kotlin_stdlib
     implementation Deps.kotlin_reflect
     implementation Deps.java_cose
-    implementation Deps.json_validation
-    implementation Deps.json_validation_rhino
+    implementation(Deps.json_validation) {
+        exclude group: "org.mozilla", module: "rhino"
+    }
     implementation Deps.jackson_cbor
     implementation Deps.bouncy_castle
 
