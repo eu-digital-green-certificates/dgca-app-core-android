@@ -48,7 +48,7 @@ class QrCodeTests {
         val cborservice: CborService = DefaultCborService()
         val base45 = prefService.decode(prefix!!, result)
         val compressed = b45Service.decode(base45, result)
-        val cose = compressorService.decode(compressed, result)
+        val cose: ByteArray = compressorService.decode(compressed, result)!!
         val cbor = coseservice.decode(cose, result)
         val greenCertificate = cborservice.decode(cbor!!.cbor, result)
         val schemaresult = validator.validate(cbor.cbor, result)
@@ -137,7 +137,7 @@ class QrCodeTests {
         val cborservice: CborService = DefaultCborService()
         val base45 = prefService.decode(hCert, result)
         val compressed = b45Service.decode(base45, result)
-        val cose = compressorService.decode(compressed, result)
+        val cose: ByteArray = compressorService.decode(compressed, result)!!
         val cbor = coseservice.decode(cose, result)
         val greenCertificate = cborservice.decodeData(cbor!!.cbor, result)
         try {

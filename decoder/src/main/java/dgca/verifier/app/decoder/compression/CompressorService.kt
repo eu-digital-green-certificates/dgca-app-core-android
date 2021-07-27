@@ -29,5 +29,5 @@ import dgca.verifier.app.decoder.model.VerificationResult
  */
 interface CompressorService {
 
-    fun decode(input: ByteArray, verificationResult: VerificationResult): ByteArray
+    fun decode(input: ByteArray, verificationResult: VerificationResult): ByteArray?
 }
