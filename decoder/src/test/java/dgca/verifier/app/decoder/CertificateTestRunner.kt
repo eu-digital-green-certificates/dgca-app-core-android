@@ -18,9 +18,7 @@ import dgca.verifier.app.decoder.prefixvalidation.PrefixValidationService
 import dgca.verifier.app.decoder.schema.DefaultSchemaValidator
 import dgca.verifier.app.decoder.schema.SchemaValidator
 import dgca.verifier.app.decoder.services.X509
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.CoreMatchers.nullValue
+import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalToIgnoringCase
 import org.hamcrest.Matchers.not
@@ -63,7 +61,7 @@ class CertificateTestRunner {
         val qrCode = case.base45WithPrefix ?: ""
         val base45 = prefixValidationService.decode(qrCode, verificationResult)
         val compressedCose = base45Service.decode(base45, verificationResult)
-        val cose = compressorService.decode(compressedCose, verificationResult)
+        val cose: ByteArray = compressorService.decode(compressedCose, verificationResult)!!
         val coseData = coseService.decode(cose, verificationResult)
         if (coseData != null) {
             schemaValidator.validate(coseData.cbor, verificationResult)
