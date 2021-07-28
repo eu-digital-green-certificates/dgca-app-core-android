@@ -6,6 +6,8 @@ import dgca.verifier.app.decoder.base45.Base45Service
 import dgca.verifier.app.decoder.base45.DefaultBase45Service
 import dgca.verifier.app.decoder.cbor.CborService
 import dgca.verifier.app.decoder.cbor.DefaultCborService
+import dgca.verifier.app.decoder.cbor.DefaultGreenCertificateMapper
+import dgca.verifier.app.decoder.cbor.GreenCertificateMapper
 import dgca.verifier.app.decoder.compression.CompressorService
 import dgca.verifier.app.decoder.compression.DefaultCompressorService
 import dgca.verifier.app.decoder.cose.CoseService
@@ -45,7 +47,8 @@ class QrCodeTests {
         val compressorService: CompressorService = DefaultCompressorService()
         val validator: SchemaValidator = DefaultSchemaValidator()
         val coseservice: CoseService = DefaultCoseService()
-        val cborservice: CborService = DefaultCborService()
+        val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper()
+        val cborservice: CborService = DefaultCborService(greenCertificateMapper)
         val base45 = prefService.decode(prefix!!, result)
         val compressed = b45Service.decode(base45, result)
         val cose: ByteArray = compressorService.decode(compressed, result)!!
@@ -67,7 +70,8 @@ class QrCodeTests {
         val hCert =
             "HC1:6BFOXN%TS3DH1QG9WA6H98BRPRHO DJS4F3S-%2LXKQGLAVDQ81LO2-36/X0X6BMF6.UCOMIN6R%E5UX4795:/6N9R%EPXCROGO3HOWGOKEQBKL/645YPL\$R-ROM47E.K6K8I115DL-9C1QD+82D8C+ CH8CV9CA\$DPN0NTICZU80LZW4Z*AK.GNNVR*G0C7PHBO33/X086BTTTCNB*UJHMJ8J3HONNQN09B5PNVNNWGJZ730DNHMJSLJ*E3G23B/S7-SN2H N37J3 QTULJ7CB3ZC6.27AL4%IY.IQH5YRT5*K51T 1DT 456L X4CZKHKB-43.E3KD3OAJ/9TL4T1C9 UP IPGTUI7FKQU2N1L8VFLU9WU.B9 UPYR181A0+P8V7/JA--J/XTQWE/PEBLEH-BY.CECH$6KJEM*PC9JAU-BZ8ERJCS0DUMQI+O1-ST*QGTA4W7.Y7G+SB.V Q5NN9TJ1TM8554.8EW E2NS6F9\$J3-MQPSUB*H1EI+TUN73 39EX4165ABSXFB487V*K9J8UJC08H3N7T:DAIJC8K8T3TCF*6P.OB9Q721UJ+K.OJ4EW/S1*13PNG"
         val base45Decoder = Base45Decoder()
-        val decoder = DefaultCertificateDecoder(base45Decoder)
+        val greenCertificateMapper = DefaultGreenCertificateMapper()
+        val decoder = DefaultCertificateDecoder(greenCertificateMapper, base45Decoder)
         val result = decoder.decodeCertificate(hCert)
         assertTrue(result is CertificateDecodingResult.Success)
         val pubkey =
@@ -80,7 +84,8 @@ class QrCodeTests {
         val hCert =
             "HC1:NCFOXN*TS0BI\$ZDYSHIAL*ECH 8S021091JDNDC3LE84DIJ9CIE7-78WA46VGOU:ZH6I1%4JF 2K%5PK9CZLEQ56SP.E5BQ95ZM3763LED6N%ZEXE6%HULAV**M82F93I6*6 %6PK9B/0MCIMMISVDG8C5DL-9C1QDW33C8C0U09B91*KEDC6J0GJ4JXGHHBIWB.80XUTKQS7DS2*N.SSBNKA.G.P6A8IM%OVNIA KZ*U0I1-I0*OC6H0UWM2NISGH*BSPRAFTI/T1A.PECGX%EN+P.Y0/9TL4T.B9GYPNIN:EWD QZQHU*PH86DROI%KXYNYKTKK1Y R/03YVBO7L.CCP7A+5S*T08JFHAIN95+Y5 P4KDO+*OH:7SA7G6MS/5U*O3DRE6P6/QVHPOVQJT5FT5D75W9AV88G64KE809KV+EYMOL61I/JTYJJP66IL/XCBJBJ3DJGOBIG2%5AM4T/JKATN5NN7TA9QB.PY38PMKIQJ8:P-TVS L\$W8LOAFXUWWLP-RO1E550%/OE5"
         val base45Decoder = Base45Decoder()
-        val decoder = DefaultCertificateDecoder(base45Decoder)
+        val greenCertificateMapper = DefaultGreenCertificateMapper()
+        val decoder = DefaultCertificateDecoder(greenCertificateMapper, base45Decoder)
         val result = decoder.decodeCertificate(hCert)
         assertTrue(result is CertificateDecodingResult.Success)
         val pubkey =
@@ -93,7 +98,8 @@ class QrCodeTests {
         val hCert =
             "HC1:6BFR%BH:7*I0PS33NUA9HWP5PZ2CLJ*GH7WV-UNA1VZJKZ6HX.A/5R..9*CV6+LJ*F.UN7A2BT8B+6B897S69R48S1.R1VJO9Q1ZZO+CC\$A9%T5X7RI25A8S57D JK-PQ+JR*FDTW3+1EC1JXLOQ58+KFL49ZMENAO.YOWR75PAH0HD6AIHCPWHJTF.RJ*JCSKEHL1N31HWEO67KJH8TIX-B3QB-+9*LCU:C:P2QEEQ7KF\$V--4CW7JWILDWU%Q%IO0LAK70J\$KW2JW56.KO8E2RHPH60ILI8T0N/7OEPD7P3+3IH9VZIVWP.44FX87QH5I97ZK0MK8OIGC3 3CQ6WO+9P9ECRSV%72M4L65 KAVKE*YPRHSIF1 89*4NDZ7FU6:F6NPJ1PHL059BGBB1%/C/J91R75Z5I7CWV0TREWYSY8ULK5HWPGEP\$SI5B1$8HDOCH3JEBCL*8SE2AZT9SC+84JVGR39:2V*TR:KBW/4S:FK DOHF-1789MQ.18CV2C3YCN79OR176:1U:0CQVNGDJ0GUPO%CRT+QC/O$:D/WQY$3*5UR2M4YPFXK\$DH"
         val base45Decoder = Base45Decoder()
-        val decoder = DefaultCertificateDecoder(base45Decoder)
+        val greenCertificateMapper = DefaultGreenCertificateMapper()
+        val decoder = DefaultCertificateDecoder(greenCertificateMapper, base45Decoder)
         val result = decoder.decodeCertificate(hCert)
         assertTrue(result is CertificateDecodingResult.Success)
     }
@@ -103,7 +109,8 @@ class QrCodeTests {
         val hCert =
             "HC1:NCF780+80T9WTWGSLKC 4J9965QTH121L3LCFBB*A3*70M+9FN03DCZSJWY0JAC4+UD97TK0F90KECTHGWJC0FDVQ4AIA%G7X+AQB9746VG7W0AV+AWM96X6FCAJY8-F6846W%6V%60ZAKB7UPCBJCR1AFVC*70LVC6JD846Y96A464W5.A6+EDL8F9-98LE* CMEDM-DXC9 QE-ED8%EDZCX3E$34Z\$EXVD-NC%69AECAWE.JCBECB1A-:8$966469L6OF6VX6Q\$D.UDRYA 96NF6L/5SW6Y57KQEPD09WEQDD+Q6TW6FA7C466KCN9E%961A6DL6FA7D46JPCT3E5JDMA7346D463W5Z57..DX%DZJC7/DCWO3/DTVDD5D9-K3VCI3DU2DGECUGDK MLPCG/D2SDUWGR095Y8DWO0IAMPCG/DU2DRB8SE9VXI\$PC5\$CUZCZ$5Y$527B0DR-NGD9R696*KOX\$N3E5G-ER 5ZOHMLQW4O-1M1I0OHE1SVLZNT361*ED+E7ICER5-HMV*47OO$5J+%Q8KU7+G275H7TDX9R+GZWG"
         val base45Decoder = Base45Decoder()
-        val decoder = DefaultCertificateDecoder(base45Decoder)
+        val greenCertificateMapper = DefaultGreenCertificateMapper()
+        val decoder = DefaultCertificateDecoder(greenCertificateMapper, base45Decoder)
         val result = decoder.decodeCertificate(hCert)
         assertTrue(result is CertificateDecodingResult.Success)
         val pubkey =
@@ -116,7 +123,8 @@ class QrCodeTests {
         val hCert =
             "HC1:NCFOXNEG2NBJ5*H:QO-.OMBN+XQ99N*6RFS5*TCVWBM*4ODMS0NSRHAL9.4I92P*AVAN9I6T5XH4PIQJAZGA2:UG%U:PI/E2$4JY/KB1TFTJ:0EPLNJ58G/1W-26ALD-I2\$VFVVE.80Z0 /KY.SKZC*0K5AFP7T/MV*MNY\$N.R6 7P45AHJSP\$I/XK\$M8TH1PZB*L8/G9HEDCHJ4OIMEDTJCJKDLEDL9CVTAUPIAK29VCN 1UTKFYJZJAPEDI.C\$JC7KDF9CFVAPUB1VCSWC%PDMOLHTC\$JC3EC66CTS89B9F$8H.OOLI7R3Y+95AF3J6FB5R8QMA70Z37244FKG6T\$FJ7CQRB0R%5 47:W0UFJU.UOJ98J93DI+C0UEE-JEJ36VLIWQHH\$QIZB%+N+Y2AW2OP6OH6XO9IE5IVU\$P26J6 L6/E2US2CZU:80I7JM7JHOJKYJPGK:H3J1D1I3-*TW CXBD+$3PY2C725SS+TDM\$SF*SHVT:5D79U+GC5QS+3TAQS:FLU+34IU*9VY-Q9P9SEW-AB+2Q2I56L916CO8T C609O1%NXDU-:R4TICQA.0F2HFLXLLWI8ZU53BMQ2N U:VQQ7RWY91SV2A7N3WQ9J9OAZ00RKLB2"
         val base45Decoder = Base45Decoder()
-        val decoder = DefaultCertificateDecoder(base45Decoder)
+        val greenCertificateMapper = DefaultGreenCertificateMapper()
+        val decoder = DefaultCertificateDecoder(greenCertificateMapper, base45Decoder)
         val result = decoder.decodeCertificate(hCert)
         assertTrue(result is CertificateDecodingResult.Success)
         val pubkey =
@@ -134,7 +142,8 @@ class QrCodeTests {
         val compressorService: CompressorService = DefaultCompressorService()
         val validator: SchemaValidator = DefaultSchemaValidator()
         val coseservice: CoseService = DefaultCoseService()
-        val cborservice: CborService = DefaultCborService()
+        val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper()
+        val cborservice: CborService = DefaultCborService(greenCertificateMapper)
         val base45 = prefService.decode(hCert, result)
         val compressed = b45Service.decode(base45, result)
         val cose: ByteArray = compressorService.decode(compressed, result)!!

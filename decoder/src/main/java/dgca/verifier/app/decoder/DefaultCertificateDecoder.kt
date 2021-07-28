@@ -23,17 +23,17 @@
 package dgca.verifier.app.decoder
 
 import COSE.HeaderKeys
-import com.fasterxml.jackson.dataformat.cbor.databind.CBORMapper
 import com.upokecenter.cbor.CBORObject
 import dgca.verifier.app.decoder.base45.Base45Decoder
+import dgca.verifier.app.decoder.cbor.GreenCertificateMapper
 import dgca.verifier.app.decoder.cwt.CwtHeaderKeys
 import dgca.verifier.app.decoder.model.CoseData
 import dgca.verifier.app.decoder.model.GreenCertificate
 import java.util.zip.InflaterInputStream
 
 @ExperimentalUnsignedTypes
-class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder) :
-    CertificateDecoder {
+class DefaultCertificateDecoder(private val greenCertificateMapper: GreenCertificateMapper, private val base45Decoder: Base45Decoder) :
+        CertificateDecoder {
     companion object {
         const val PREFIX = "HC1:"
     }
@@ -62,7 +62,7 @@ class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder) :
             coseData.cbor.decodeGreenCertificate()
         } catch (error: Throwable) {
             return CertificateDecodingResult.Error(CertificateDecodingError.GreenCertificateDecodingError(error))
-        } ?: return CertificateDecodingResult.Error(CertificateDecodingError.EmptyGreenCertificate)
+        }
 
 
         return CertificateDecodingResult.Success(greenCertificate)
@@ -72,11 +72,11 @@ class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder) :
     private fun ByteArray.decompressBase45DecodedData(): ByteArray {
         // ZLIB magic headers
         return if (this.size >= 2 && this[0] == 0x78.toByte() && (
-                    this[1] == 0x01.toByte() || // Level 1
-                            this[1] == 0x5E.toByte() || // Level 2 - 5
-                            this[1] == 0x9C.toByte() || // Level 6
-                            this[1] == 0xDA.toByte()
-                    )
+                        this[1] == 0x01.toByte() || // Level 1
+                                this[1] == 0x5E.toByte() || // Level 2 - 5
+                                this[1] == 0x9C.toByte() || // Level 6
+                                this[1] == 0xDA.toByte()
+                        )
         ) {
             InflaterInputStream(this.inputStream()).readBytes()
         } else this
@@ -97,12 +97,12 @@ class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder) :
         return CoseData(content, objProtected)
     }
 
-    private fun ByteArray.decodeGreenCertificate(): GreenCertificate? {
+    private fun ByteArray.decodeGreenCertificate(): GreenCertificate {
         val map = CBORObject.DecodeFromBytes(this)
         val hcert = map[CwtHeaderKeys.HCERT.asCBOR()]
-        val hcertv1 = hcert[CBORObject.FromObject(1)].EncodeToBytes()
+        val cborObject = hcert[CBORObject.FromObject(1)]
 
-        return CBORMapper()
-            .readValue(hcertv1, GreenCertificate::class.java)
+        return greenCertificateMapper
+                .readValue(cborObject)
     }
 }

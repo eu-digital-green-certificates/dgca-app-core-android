@@ -5,6 +5,7 @@ import dgca.verifier.app.decoder.base45.Base45Service
 import dgca.verifier.app.decoder.base45.DefaultBase45Service
 import dgca.verifier.app.decoder.cbor.CborService
 import dgca.verifier.app.decoder.cbor.DefaultCborService
+import dgca.verifier.app.decoder.cbor.GreenCertificateMapper
 import dgca.verifier.app.decoder.compression.CompressorService
 import dgca.verifier.app.decoder.compression.DefaultCompressorService
 import dgca.verifier.app.decoder.cose.CoseService
@@ -37,6 +38,7 @@ class CertificateTestRunner {
     private lateinit var cryptoService: CryptoService
     private lateinit var coseService: CoseService
     private lateinit var schemaValidator: SchemaValidator
+    private lateinit var greenCertificateMapper: GreenCertificateMapper
     private lateinit var cborService: CborService
 
     @BeforeEach
@@ -47,7 +49,7 @@ class CertificateTestRunner {
         cryptoService = VerificationCryptoService(X509())
         coseService = DefaultCoseService()
         schemaValidator = DefaultSchemaValidator()
-        cborService = DefaultCborService()
+        cborService = DefaultCborService(greenCertificateMapper)
     }
 
     @ParameterizedTest
