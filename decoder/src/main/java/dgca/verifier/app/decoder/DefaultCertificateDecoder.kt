@@ -33,7 +33,7 @@ import dgca.verifier.app.decoder.model.GreenCertificate
 import java.util.zip.InflaterInputStream
 
 @ExperimentalUnsignedTypes
-class DefaultCertificateDecoder(private val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper(), private val base45Decoder: Base45Decoder) :
+class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder, private val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper()) :
         CertificateDecoder {
     companion object {
         const val PREFIX = "HC1:"
