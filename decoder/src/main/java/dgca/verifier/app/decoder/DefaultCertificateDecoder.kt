@@ -25,6 +25,7 @@ package dgca.verifier.app.decoder
 import COSE.HeaderKeys
 import com.upokecenter.cbor.CBORObject
 import dgca.verifier.app.decoder.base45.Base45Decoder
+import dgca.verifier.app.decoder.cbor.DefaultGreenCertificateMapper
 import dgca.verifier.app.decoder.cbor.GreenCertificateMapper
 import dgca.verifier.app.decoder.cwt.CwtHeaderKeys
 import dgca.verifier.app.decoder.model.CoseData
@@ -32,7 +33,7 @@ import dgca.verifier.app.decoder.model.GreenCertificate
 import java.util.zip.InflaterInputStream
 
 @ExperimentalUnsignedTypes
-class DefaultCertificateDecoder(private val greenCertificateMapper: GreenCertificateMapper, private val base45Decoder: Base45Decoder) :
+class DefaultCertificateDecoder(private val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper(), private val base45Decoder: Base45Decoder) :
         CertificateDecoder {
     companion object {
         const val PREFIX = "HC1:"

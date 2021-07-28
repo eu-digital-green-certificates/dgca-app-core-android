@@ -32,7 +32,7 @@ import java.time.ZoneOffset
 /**
  * Decodes input as a CBOR structure
  */
-class DefaultCborService(private val greenCertificateMapper: GreenCertificateMapper) : CborService {
+class DefaultCborService(private val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper()) : CborService {
 
     override fun decode(
             input: ByteArray,
