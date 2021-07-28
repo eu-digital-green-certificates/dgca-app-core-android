@@ -6,6 +6,8 @@ import dgca.verifier.app.decoder.base45.Base45Service
 import dgca.verifier.app.decoder.base45.DefaultBase45Service
 import dgca.verifier.app.decoder.cbor.CborService
 import dgca.verifier.app.decoder.cbor.DefaultCborService
+import dgca.verifier.app.decoder.cbor.DefaultGreenCertificateMapper
+import dgca.verifier.app.decoder.cbor.GreenCertificateMapper
 import dgca.verifier.app.decoder.compression.CompressorService
 import dgca.verifier.app.decoder.compression.DefaultCompressorService
 import dgca.verifier.app.decoder.cose.CoseService
@@ -45,7 +47,8 @@ class QrCodeTests {
         val compressorService: CompressorService = DefaultCompressorService()
         val validator: SchemaValidator = DefaultSchemaValidator()
         val coseservice: CoseService = DefaultCoseService()
-        val cborservice: CborService = DefaultCborService()
+        val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper()
+        val cborservice: CborService = DefaultCborService(greenCertificateMapper)
         val base45 = prefService.decode(prefix!!, result)
         val compressed = b45Service.decode(base45, result)
         val cose: ByteArray = compressorService.decode(compressed, result)!!
@@ -134,7 +137,8 @@ class QrCodeTests {
         val compressorService: CompressorService = DefaultCompressorService()
         val validator: SchemaValidator = DefaultSchemaValidator()
         val coseservice: CoseService = DefaultCoseService()
-        val cborservice: CborService = DefaultCborService()
+        val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper()
+        val cborservice: CborService = DefaultCborService(greenCertificateMapper)
         val base45 = prefService.decode(hCert, result)
         val compressed = b45Service.decode(base45, result)
         val cose: ByteArray = compressorService.decode(compressed, result)!!
