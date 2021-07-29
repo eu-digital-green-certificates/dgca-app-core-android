@@ -50,6 +50,7 @@ dependencies {
     implementation(Deps.json_validation) {
         exclude group: "org.mozilla", module: "rhino"
     }
+
     implementation Deps.jackson_cbor
     implementation Deps.bouncy_castle
 

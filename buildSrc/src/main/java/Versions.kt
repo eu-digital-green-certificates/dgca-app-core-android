@@ -34,7 +34,7 @@ object Versions {
     const val bouncy_castle = "1.68"
 
     // Validation
-    const val json_validation = "2.2.6"
+    const val json_validation = "2.2.14"
 
     // Tests
     const val junit = "4.13.1"
