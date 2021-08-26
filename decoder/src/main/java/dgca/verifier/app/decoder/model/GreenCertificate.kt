@@ -22,6 +22,7 @@
 
 package dgca.verifier.app.decoder.model
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.io.Serializable
 import java.util.*
@@ -29,6 +30,7 @@ import java.util.*
 /**
  * CBOR structure of the certificate
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class GreenCertificate(
 
     @JsonProperty("ver")
