@@ -32,16 +32,17 @@ import java.time.ZoneOffset
 /**
  * Decodes input as a CBOR structure
  */
-class DefaultCborService(private val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper()) : CborService {
+class DefaultCborService(private val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper()) :
+    CborService {
 
     override fun decode(
-            input: ByteArray,
-            verificationResult: VerificationResult
+        input: ByteArray,
+        verificationResult: VerificationResult
     ): GreenCertificate? = decodeData(input, verificationResult)?.greenCertificate
 
     override fun decodeData(
-            input: ByteArray,
-            verificationResult: VerificationResult
+        input: ByteArray,
+        verificationResult: VerificationResult
     ): GreenCertificateData? {
         verificationResult.cborDecoded = false
         return try {
@@ -60,9 +61,25 @@ class DefaultCborService(private val greenCertificateMapper: GreenCertificateMap
             val cborObject = hcert[CBORObject.FromObject(1)]
 
             val greenCertificate: GreenCertificate = greenCertificateMapper.readValue(cborObject)
-                    .also { verificationResult.cborDecoded = true }
-            GreenCertificateData(issuingCountry, cborObject.ToJSONString(), greenCertificate, issuedAt.atZone(ZoneOffset.UTC), expirationTime.atZone(ZoneOffset.UTC))
+                .also { verificationResult.cborDecoded = true }
+            GreenCertificateData(
+                issuingCountry,
+                cborObject.ToJSONString(),
+                greenCertificate,
+                issuedAt.atZone(ZoneOffset.UTC),
+                expirationTime.atZone(ZoneOffset.UTC)
+            )
         } catch (e: Throwable) {
+            null
+        }
+    }
+
+    override fun getPayload(input: ByteArray): ByteArray? {
+        return try {
+            val map = CBORObject.DecodeFromBytes(input)
+            val hcert = map[CwtHeaderKeys.HCERT.asCBOR()]
+            hcert[CBORObject.FromObject(1)].EncodeToBytes()
+        } catch (ex: Exception) {
             null
         }
     }
