@@ -51,4 +51,6 @@ interface CborService {
         input: ByteArray,
         verificationResult: VerificationResult
     ): GreenCertificateData?
+
+    fun getPayload(input: ByteArray): ByteArray?
 }
