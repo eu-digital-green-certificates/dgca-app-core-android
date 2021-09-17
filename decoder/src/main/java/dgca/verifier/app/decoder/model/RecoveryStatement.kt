@@ -23,10 +23,8 @@
 package dgca.verifier.app.decoder.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import org.joda.time.DateTime
 import java.io.Serializable
 import java.time.*
-import java.time.format.DateTimeFormatter
 
 data class RecoveryStatement(
 
