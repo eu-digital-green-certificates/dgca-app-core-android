@@ -162,7 +162,8 @@ class QrCodeTests {
         assertTrue(result is CertificateDecodingResult.Success)
         val pubkey =
             "MIICfzCCAiSgAwIBAgIJANDkbKaGCvSkMAoGCCqGSM49BAMCMGsxCzAJBgNVBAYTAlNHMRIwEAYDVQQIDAlTaW5nYXBvcmUxJTAjBgNVBAoMHEdvdmVybm1lbnQgVGVjaG5vbG9neSBBZ2VuY3kxITAfBgNVBAMMGGNzY2Euc3RhZ2luZy5ub3RhcmlzZS5pbzAeFw0yMTA4MjAwODEwMjVaFw0yMzA4MjAwODEwMjVaMF8xCzAJBgNVBAYTAlNHMRIwEAYDVQQIDAlTaW5nYXBvcmUxGzAZBgNVBAoMEk1pbmlzdHJ5IE9mIEhlYWx0aDEfMB0GA1UEAwwWZHNjLnN0YWdpbmcubW9oLmdvdi5zZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABG6h52WC7Ckx2k95sz7xGAwHpDQIpE+lMhebUORtvNWlCTEEOm1XsuBlmv/jS8myG0KrkMYVE6ipnGVGBDoCSzWjgbwwgbkwDgYDVR0PAQH/BAQDAgeAMB0GA1UdDgQWBBQhexgG2ZTivr2S7HfMuPvHk8gC+jAfBgNVHSMEGDAWgBRw8Z6F7tNUNI+w2qkyzRBQdF8mzDA1BgNVHR8ELjAsMCqgKKAmhiRodHRwczovL3N0YWdpbmcubm90YXJpc2UuaW8vY3NjYS5jcmwwMAYDVR0lBCkwJwYLKwYBBAGON49lAQEGCysGAQQBjjePZQECBgsrBgEEAY43j2UBAzAKBggqhkjOPQQDAgNJADBGAiEAt2LRfzgyMlWgUatdJ91qUAhA0YsCIoKGqBBai0BNjkACIQDoSXxXHFoxynQfQUQiqW1nsNS4IZ/cr2TAA8P7Sd3qSw=="
-        assertTrue(verify(hCert, pubkey))
+        val res = verifyResult(hCert, pubkey)
+        assertTrue(res.coseVerified)
     }
 
     @Test
