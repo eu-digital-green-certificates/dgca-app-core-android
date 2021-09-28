@@ -57,7 +57,10 @@ data class Vaccination(
     val certificateIssuer: String,
 
     @JsonProperty("ci")
-    val certificateIdentifier: String
+    val certificateIdentifier: String,
+
+    @JsonProperty("dp")
+    val dp: Int
 
 ) : Serializable {
 
