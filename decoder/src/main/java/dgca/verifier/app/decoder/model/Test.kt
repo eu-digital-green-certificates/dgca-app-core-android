@@ -22,12 +22,14 @@
 
 package dgca.verifier.app.decoder.model
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.io.Serializable
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Test(
 
     @JsonProperty("tg")
