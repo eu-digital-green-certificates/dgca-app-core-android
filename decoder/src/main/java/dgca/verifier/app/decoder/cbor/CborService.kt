@@ -34,10 +34,13 @@ data class GreenCertificateData(
     val issuedAt: ZonedDateTime,
     val expirationTime: ZonedDateTime
 ) {
+
     fun getNormalizedIssuingCountry(): String =
-        (if (this.issuingCountry?.isNotBlank() == true) this.issuingCountry else this.greenCertificate.getIssuingCountry()).toLowerCase(
-            Locale.ROOT
-        )
+        (if (this.issuingCountry?.isNotBlank() == true) {
+            this.issuingCountry
+        } else {
+            this.greenCertificate.getIssuingCountry()
+        }).toLowerCase(Locale.ROOT)
 }
 
 /**
@@ -47,10 +50,7 @@ interface CborService {
 
     fun decode(input: ByteArray, verificationResult: VerificationResult): GreenCertificate?
 
-    fun decodeData(
-        input: ByteArray,
-        verificationResult: VerificationResult
-    ): GreenCertificateData?
+    fun decodeData(input: ByteArray, verificationResult: VerificationResult): GreenCertificateData?
 
     fun getPayload(input: ByteArray): ByteArray?
 }

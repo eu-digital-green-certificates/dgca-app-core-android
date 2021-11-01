@@ -52,9 +52,6 @@ data class RecoveryStatement(
     val certificateIdentifier: String
 
 ) : Serializable {
-    companion object {
-        private val UTC_ZONE_ID: ZoneId = ZoneId.ofOffset("", ZoneOffset.UTC).normalized()
-    }
 
     fun isCertificateNotValidAnymore(): Boolean? =
         certificateValidUntil.toZonedDateTimeOrUtcLocal()?.isBefore(ZonedDateTime.now())
@@ -83,4 +80,8 @@ data class RecoveryStatement(
     private fun String.toZonedDateTimeOrUtcLocal(): ZonedDateTime? =
         this.toZonedDateTime()?.withZoneSameInstant(UTC_ZONE_ID) ?: this.toLocalDateTime()
             ?.atZone(UTC_ZONE_ID) ?: this.toLocalDate()?.atStartOfDay(UTC_ZONE_ID)
+
+    companion object {
+        private val UTC_ZONE_ID: ZoneId = ZoneId.ofOffset("", ZoneOffset.UTC).normalized()
+    }
 }

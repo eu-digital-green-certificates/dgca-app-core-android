@@ -26,5 +26,6 @@ import com.upokecenter.cbor.CBORObject
 import dgca.verifier.app.decoder.model.GreenCertificate
 
 interface GreenCertificateMapper {
+
     fun readValue(cborObject: CBORObject): GreenCertificate
 }
