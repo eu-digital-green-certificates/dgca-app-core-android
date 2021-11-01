@@ -33,11 +33,10 @@ import dgca.verifier.app.decoder.model.GreenCertificate
 import java.util.zip.InflaterInputStream
 
 @ExperimentalUnsignedTypes
-class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder, private val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper()) :
-        CertificateDecoder {
-    companion object {
-        const val PREFIX = "HC1:"
-    }
+class DefaultCertificateDecoder(
+    private val base45Decoder: Base45Decoder,
+    private val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper()
+) : CertificateDecoder {
 
     override fun decodeCertificate(qrCodeText: String): CertificateDecodingResult {
         val withoutPrefix: String = if (qrCodeText.startsWith(PREFIX)) qrCodeText.drop(PREFIX.length) else qrCodeText
@@ -65,7 +64,6 @@ class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder, privat
             return CertificateDecodingResult.Error(CertificateDecodingError.GreenCertificateDecodingError(error))
         }
 
-
         return CertificateDecodingResult.Success(greenCertificate)
     }
 
@@ -73,11 +71,11 @@ class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder, privat
     private fun ByteArray.decompressBase45DecodedData(): ByteArray {
         // ZLIB magic headers
         return if (this.size >= 2 && this[0] == 0x78.toByte() && (
-                        this[1] == 0x01.toByte() || // Level 1
-                                this[1] == 0x5E.toByte() || // Level 2 - 5
-                                this[1] == 0x9C.toByte() || // Level 6
-                                this[1] == 0xDA.toByte()
-                        )
+                    this[1] == 0x01.toByte() || // Level 1
+                            this[1] == 0x5E.toByte() || // Level 2 - 5
+                            this[1] == 0x9C.toByte() || // Level 6
+                            this[1] == 0xDA.toByte()
+                    )
         ) {
             InflaterInputStream(this.inputStream()).readBytes()
         } else this
@@ -95,6 +93,7 @@ class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder, privat
             return CoseData(content, objunprotected)
         }
         val objProtected = CBORObject.DecodeFromBytes(rgbProtected).get(key).GetByteString()
+
         return CoseData(content, objProtected)
     }
 
@@ -103,7 +102,10 @@ class DefaultCertificateDecoder(private val base45Decoder: Base45Decoder, privat
         val hcert = map[CwtHeaderKeys.HCERT.asCBOR()]
         val cborObject = hcert[CBORObject.FromObject(1)]
 
-        return greenCertificateMapper
-                .readValue(cborObject)
+        return greenCertificateMapper.readValue(cborObject)
+    }
+
+    companion object {
+        const val PREFIX = "HC1:"
     }
 }

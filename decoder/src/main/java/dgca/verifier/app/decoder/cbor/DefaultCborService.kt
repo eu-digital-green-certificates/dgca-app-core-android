@@ -35,10 +35,8 @@ import java.time.ZoneOffset
 class DefaultCborService(private val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper()) :
     CborService {
 
-    override fun decode(
-        input: ByteArray,
-        verificationResult: VerificationResult
-    ): GreenCertificate? = decodeData(input, verificationResult)?.greenCertificate
+    override fun decode(input: ByteArray, verificationResult: VerificationResult): GreenCertificate? =
+        decodeData(input, verificationResult)?.greenCertificate
 
     override fun decodeData(
         input: ByteArray,

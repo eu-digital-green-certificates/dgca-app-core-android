@@ -6,6 +6,7 @@ import java.security.cert.*
 
 
 class X509 {
+
     private val OID_TEST = "1.3.6.1.4.1.1847.2021.1.1"
     private val OID_ALT_TEST = "1.3.6.1.4.1.0.1847.2021.1.1"
     private val OID_VACCINATION = "1.3.6.1.4.1.1847.2021.1.2"

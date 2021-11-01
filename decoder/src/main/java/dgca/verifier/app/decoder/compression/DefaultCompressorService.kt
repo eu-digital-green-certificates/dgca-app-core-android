@@ -40,11 +40,12 @@ class DefaultCompressorService : CompressorService {
     override fun decode(input: ByteArray, verificationResult: VerificationResult): ByteArray? {
         verificationResult.zlibDecoded = false
         if (input.size >= 2 && input[0] == 0x78.toByte() // ZLIB magic headers
-                && (input[1] == 0x01.toByte() || // Level 1
-                        input[1] == 0x5E.toByte() || // Level 2 - 5
-                        input[1] == 0x9C.toByte() || // Level 6
-                        input[1] == 0xDA.toByte()    // Level 7 - 9
-                        )) {
+            && (input[1] == 0x01.toByte() || // Level 1
+                    input[1] == 0x5E.toByte() || // Level 2 - 5
+                    input[1] == 0x9C.toByte() || // Level 6
+                    input[1] == 0xDA.toByte()    // Level 7 - 9
+                    )
+        ) {
             return try {
                 val inflaterStream = InflaterInputStream(input.inputStream())
                 val outputStream = ByteArrayOutputStream(DEFAULT_BUFFER_SIZE)
