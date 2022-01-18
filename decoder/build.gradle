@@ -46,7 +46,7 @@ dependencies {
 
     implementation Deps.kotlin_stdlib
     implementation Deps.kotlin_reflect
-    implementation Deps.java_cose
+    implementation Deps.cbor
     implementation(Deps.json_validation) {
         exclude group: "org.mozilla", module: "rhino"
     }

@@ -30,7 +30,7 @@ object Versions {
     // Decoder
     const val kotlin_reflect = "1.4.32"
     const val jackson_cbor = "2.12.3"
-    const val java_cose = "1.1.0"
+    const val cbor = "4.5.1"
     const val bouncy_castle = "1.68"
 
     // Validation

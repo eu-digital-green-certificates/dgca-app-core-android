@@ -28,7 +28,7 @@ object Deps {
 
     const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
     const val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin_reflect}"
-    const val java_cose = "com.augustcellars.cose:cose-java:${Versions.java_cose}"
+    const val cbor = "com.upokecenter:cbor:${Versions.cbor}"
     const val json_validation = "com.github.java-json-tools:json-schema-validator:${Versions.json_validation}"
     const val jackson_cbor = "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:${Versions.jackson_cbor}"
     const val bouncy_castle = "org.bouncycastle:bcpkix-jdk15to18:${Versions.bouncy_castle}"
