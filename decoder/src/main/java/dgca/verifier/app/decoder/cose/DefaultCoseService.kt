@@ -22,11 +22,12 @@
 
 package dgca.verifier.app.decoder.cose
 
-import COSE.HeaderKeys
 import com.google.common.primitives.Bytes
 import com.upokecenter.cbor.CBORObject
 import dgca.verifier.app.decoder.model.CoseData
 import dgca.verifier.app.decoder.model.VerificationResult
+
+const val HEADER_KID = 4
 
 /**
  * Decodes input according to COSE specification (RFC8152)
@@ -49,7 +50,7 @@ class DefaultCoseService : CoseService {
     }
 
     private fun getKid(protectedHeader: ByteArray, unprotectedHeader: CBORObject): CBORObject? {
-        val key = HeaderKeys.KID.AsCBOR()
+        val key = CBORObject.FromObject(HEADER_KID)
         return if (protectedHeader.isNotEmpty()) {
             try {
                 val kid = CBORObject.DecodeFromBytes(protectedHeader).get(key)

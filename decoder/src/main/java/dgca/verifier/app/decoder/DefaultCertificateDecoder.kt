@@ -22,11 +22,11 @@
 
 package dgca.verifier.app.decoder
 
-import COSE.HeaderKeys
 import com.upokecenter.cbor.CBORObject
 import dgca.verifier.app.decoder.base45.Base45Decoder
 import dgca.verifier.app.decoder.cbor.DefaultGreenCertificateMapper
 import dgca.verifier.app.decoder.cbor.GreenCertificateMapper
+import dgca.verifier.app.decoder.cose.HEADER_KID
 import dgca.verifier.app.decoder.cwt.CwtHeaderKeys
 import dgca.verifier.app.decoder.model.CoseData
 import dgca.verifier.app.decoder.model.GreenCertificate
@@ -86,7 +86,7 @@ class DefaultCertificateDecoder(
         val content = messageObject[2].GetByteString()
         val rgbProtected = messageObject[0].GetByteString()
         val rgbUnprotected = messageObject[1]
-        val key = HeaderKeys.KID.AsCBOR()
+        val key = CBORObject.FromObject(HEADER_KID)
 
         if (!CBORObject.DecodeFromBytes(rgbProtected).keys.contains(key)) {
             val objunprotected = rgbUnprotected.get(key).GetByteString()
