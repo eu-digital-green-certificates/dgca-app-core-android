@@ -6,7 +6,7 @@
 
     <groupId>eu.europa.ec.dgc</groupId>
     <artifactId>dgc-decoder</artifactId>
-    <version>0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>dgc-decoder</name>
@@ -24,19 +24,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- dependencies -->
-        <Versions.kotlin>1.4.32</Versions.kotlin>
-        <Versions.kotlin_reflect>1.4.32</Versions.kotlin_reflect>
+        <Versions.kotlin>1.6.0</Versions.kotlin>
+        <Versions.kotlin_reflect>1.6.0</Versions.kotlin_reflect>
         <Versions.kotlinx_coroutines_core>1.5.1</Versions.kotlinx_coroutines_core>
         <Versions.java_cose>1.1.0</Versions.java_cose>
         <Versions.json_validation>2.2.14</Versions.json_validation>
 
-        <Versions.jackson_cbor>2.12.3</Versions.jackson_cbor>
+        <Versions.jackson_cbor>2.13.1</Versions.jackson_cbor>
         <Versions.jackson_kotlin>2.12.0</Versions.jackson_kotlin>
         <Versions.jackson_datetype>jackson-datatype-jsr310</Versions.jackson_datetype>
         <Versions.appache_commons>2.9.0</Versions.appache_commons>
 
-        <Versions.junit>4.13.1</Versions.junit>
-        <Versions.junit_jupiter>5.7.1</Versions.junit_jupiter>
+        <Versions.junit>4.13.2</Versions.junit>
+        <Versions.junit_jupiter>5.8.2</Versions.junit_jupiter>
         <Versions.hamcrest>2.2</Versions.hamcrest>
         <Versions.test_version>1.3.0</Versions.test_version>
         <Versions.test_ext_version>1.1.2</Versions.test_ext_version>
