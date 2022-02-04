@@ -22,9 +22,13 @@
 
 package dgca.verifier.app.decoder.model
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.joda.time.DateTime
 import java.io.Serializable
+import java.time.OffsetDateTime
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Vaccination(
 
     @JsonProperty("tg")
@@ -55,6 +59,14 @@ data class Vaccination(
     val certificateIssuer: String,
 
     @JsonProperty("ci")
-    val certificateIdentifier: String
+    val certificateIdentifier: String,
 
-) : Serializable
+) : Serializable {
+
+    fun isDateInThePast(): Boolean =
+        try {
+            DateTime.parse(dateOfVaccination).millis < OffsetDateTime.now().toEpochSecond() * 1000
+        } catch (ex: Exception) {
+            false
+        }
+}

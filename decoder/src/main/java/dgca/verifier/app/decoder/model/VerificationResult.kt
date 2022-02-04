@@ -32,15 +32,17 @@ data class VerificationResult(
     var isIssuedTimeCorrect: Boolean = false,
     var isNotExpired: Boolean = false,
     var rulesValidationFailed: Boolean = false,
+    var vaccinationVerification: VaccinationVerificationResult? = null,
     var testVerification: TestVerificationResult? = null,
     var recoveryVerification: RecoveryVerificationResult? = null
 ) {
 
     fun isValid(): Boolean {
+        val isVaccinationValid = vaccinationVerification?.isVaccinationValid() ?: true
         val isTestValid = testVerification?.isTestValid() ?: true
-        val isRecoveryValid = recoveryVerification?.isRecoveryValid() ?: true;
+        val isRecoveryValid = recoveryVerification?.isRecoveryValid() ?: true
         return base45Decoded && zlibDecoded && coseVerified && cborDecoded && isSchemaValid && isTestValid &&
-                isIssuedTimeCorrect && isNotExpired && !rulesValidationFailed && isRecoveryValid
+                isIssuedTimeCorrect && isNotExpired && !rulesValidationFailed && isRecoveryValid && isVaccinationValid
     }
 
     /**
@@ -73,6 +75,15 @@ data class VerificationResult(
         recoveryVerification!!.isNotValidSoFar
     }
 
+    /**
+     * Checks if vaccination date is valid.
+     */
+    fun isVaccinationDateInTheFuture(): Boolean = if (vaccinationVerification == null) {
+        false
+    } else {
+        !vaccinationVerification!!.isVaccinationDateInThePast
+    }
+
     override fun toString(): String {
         return "VerificationResult: \n" +
                 "base45Decoded: $base45Decoded \n" +
@@ -82,6 +93,10 @@ data class VerificationResult(
                 "cborDecoded: $cborDecoded \n" +
                 "isSchemaValid: $isSchemaValid"
     }
+}
+
+data class VaccinationVerificationResult(val isVaccinationDateInThePast: Boolean) {
+    fun isVaccinationValid(): Boolean = isVaccinationDateInThePast
 }
 
 data class TestVerificationResult(val isTestResultNegative: Boolean, val isTestDateInThePast: Boolean) {

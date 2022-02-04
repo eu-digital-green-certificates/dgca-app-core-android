@@ -40,6 +40,30 @@ class QrCodeTests {
             .generateCertificate(inputStream) as X509Certificate
     }
 
+    fun verifyResult(prefix: String?, PublicKey: String?): VerificationResult {
+        val result = VerificationResult()
+        val b45Service: Base45Service = DefaultBase45Service()
+        val prefService: PrefixValidationService = DefaultPrefixValidationService()
+        val compressorService: CompressorService = DefaultCompressorService()
+        val validator: SchemaValidator = DefaultSchemaValidator()
+        val coseservice: CoseService = DefaultCoseService()
+        val greenCertificateMapper: GreenCertificateMapper = DefaultGreenCertificateMapper()
+        val cborservice: CborService = DefaultCborService(greenCertificateMapper)
+        val base45 = prefService.decode(prefix!!, result)
+        val compressed = b45Service.decode(base45, result)
+        val cose: ByteArray = compressorService.decode(compressed, result)!!
+        val cbor = coseservice.decode(cose, result)
+        val greenCertificate = cborservice.decode(cbor!!.cbor, result)
+        val schemaresult = validator.validate(cbor.cbor, result)
+        val cryptoService: CryptoService = VerificationCryptoService(X509())
+        try {
+            val cert: X509Certificate = toCertificate(PublicKey)
+            cryptoService.validate(cose, cert, result, greenCertificate!!.getType())
+        } catch (ex: Exception) {
+        }
+        return result
+    }
+
     fun verify(prefix: String?, PublicKey: String?): Boolean {
         val result = VerificationResult()
         val b45Service: Base45Service = DefaultBase45Service()
@@ -111,7 +135,8 @@ class QrCodeTests {
         assertTrue(result is CertificateDecodingResult.Success)
         val pubkey =
             "MIICKTCCAc+gAwIBAgITewAAAB77yzK1mZYu7QAAAAAAHjAKBggqhkjOPQQDAjA/MQswCQYDVQQGEwJOTzEbMBkGA1UEChMSTm9yc2sgaGVsc2VuZXR0IFNGMRMwEQYDVQQDEwpDU0NBIE5PIHYxMB4XDTIxMDYwNzA1NTY0MloXDTIzMDYwNzA2MDY0MlowUjELMAkGA1UEBhMCTk8xLTArBgNVBAoTJE5vcndlZ2lhbiBJbnN0aXR1dGUgb2YgUHVibGljIEhlYWx0aDEUMBIGA1UEAxMLRFNDIEhOIEVVIDIwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAR0UprGbSmy5WsMAyb0GXbzemkLRvmUNswy1lBGavDjHW7CTYPd+7yG/OGaXetTnboH0jDJeL1vVQvOr12T4+teo4GWMIGTMA4GA1UdDwEB/wQEAwIHgDAzBgNVHSUELDAqBgwrBgEEAQCON49lAQEGDCsGAQQBAI43j2UBAgYMKwYBBAEAjjePZQEDMB0GA1UdDgQWBBT1z+dhLhI7/AUOAdFiK4oqzEAlrzAfBgNVHSMEGDAWgBRBY3L2ecPBcffxgRI2UhCjJQp0JzAMBgNVHRMBAf8EAjAAMAoGCCqGSM49BAMCA0gAMEUCIDnEDlot8V1hen18ra7Xjv2bGL1mdz7453ItRdx4ubllAiEAkZZKE14rprcfPW6lKcS+SwQr7IWCrMYb/nZdhecUAHM="
-        assertTrue(verify(hCert, pubkey))
+        val res = verifyResult(hCert, pubkey)
+        assertTrue(res.coseVerified)
     }
 
     @Test
@@ -136,8 +161,9 @@ class QrCodeTests {
         val result = decoder.decodeCertificate(hCert)
         assertTrue(result is CertificateDecodingResult.Success)
         val pubkey =
-            "MIICfzCCAiSgAwIBAgIJAInLHHNtUCCaMAoGCCqGSM49BAMCMGsxCzAJBgNVBAYTAlNHMRIwEAYDVQQIDAlTaW5nYXBvcmUxJTAjBgNVBAoMHEdvdmVybm1lbnQgVGVjaG5vbG9neSBBZ2VuY3kxITAfBgNVBAMMGGNzY2Euc3RhZ2luZy5ub3RhcmlzZS5pbzAeFw0yMTA4MjQxMDM0MDFaFw0yMzA4MjQxMDM0MDFaMF8xCzAJBgNVBAYTAlNHMRIwEAYDVQQIDAlTaW5nYXBvcmUxGzAZBgNVBAoMEk1pbmlzdHJ5IE9mIEhlYWx0aDEfMB0GA1UEAwwWZHNjLnN0YWdpbmcubW9oLmdvdi5zZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABHppW+8K1L9XNmHnuehezl3JnvMKo3OFuclEaefGVbuTBrp2oYDE7vB91nm3ZqpR6tL/1I5IdZvr+TXYg1+wll6jgbwwgbkwDgYDVR0PAQH/BAQDAgeAMB0GA1UdDgQWBBRsCO6wnLBmqzoP0Py+G99vwOyHKzAfBgNVHSMEGDAWgBRw8Z6F7tNUNI+w2qkyzRBQdF8mzDA1BgNVHR8ELjAsMCqgKKAmhiRodHRwczovL3N0YWdpbmcubm90YXJpc2UuaW8vY3NjYS5jcmwwMAYDVR0lBCkwJwYLKwYBBAGON49lAQEGCysGAQQBjjePZQECBgsrBgEEAY43j2UBAzAKBggqhkjOPQQDAgNJADBGAiEA7d5fnIuMeTl8c+sRpRKY9+3dKfLQ3nWj+paMsIhwKXMCIQDJ4xK9gyxaEnBIOj7FX1g20MloicdfPc2pximZbOrbEg=="
-        assertTrue(verify(hCert, pubkey))
+            "MIICfzCCAiSgAwIBAgIJANDkbKaGCvSkMAoGCCqGSM49BAMCMGsxCzAJBgNVBAYTAlNHMRIwEAYDVQQIDAlTaW5nYXBvcmUxJTAjBgNVBAoMHEdvdmVybm1lbnQgVGVjaG5vbG9neSBBZ2VuY3kxITAfBgNVBAMMGGNzY2Euc3RhZ2luZy5ub3RhcmlzZS5pbzAeFw0yMTA4MjAwODEwMjVaFw0yMzA4MjAwODEwMjVaMF8xCzAJBgNVBAYTAlNHMRIwEAYDVQQIDAlTaW5nYXBvcmUxGzAZBgNVBAoMEk1pbmlzdHJ5IE9mIEhlYWx0aDEfMB0GA1UEAwwWZHNjLnN0YWdpbmcubW9oLmdvdi5zZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABG6h52WC7Ckx2k95sz7xGAwHpDQIpE+lMhebUORtvNWlCTEEOm1XsuBlmv/jS8myG0KrkMYVE6ipnGVGBDoCSzWjgbwwgbkwDgYDVR0PAQH/BAQDAgeAMB0GA1UdDgQWBBQhexgG2ZTivr2S7HfMuPvHk8gC+jAfBgNVHSMEGDAWgBRw8Z6F7tNUNI+w2qkyzRBQdF8mzDA1BgNVHR8ELjAsMCqgKKAmhiRodHRwczovL3N0YWdpbmcubm90YXJpc2UuaW8vY3NjYS5jcmwwMAYDVR0lBCkwJwYLKwYBBAGON49lAQEGCysGAQQBjjePZQECBgsrBgEEAY43j2UBAzAKBggqhkjOPQQDAgNJADBGAiEAt2LRfzgyMlWgUatdJ91qUAhA0YsCIoKGqBBai0BNjkACIQDoSXxXHFoxynQfQUQiqW1nsNS4IZ/cr2TAA8P7Sd3qSw=="
+        val res = verifyResult(hCert, pubkey)
+        assertTrue(res.coseVerified)
     }
 
     @Test

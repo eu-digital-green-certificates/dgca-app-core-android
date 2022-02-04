@@ -22,7 +22,13 @@
 
 package dgca.verifier.app.decoder.base45
 
-import java.math.BigInteger
+// Lookup tables for faster processing
+internal val ENCODING_CHARSET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:".encodeToByteArray()
+private val DECODING_CHARSET = ByteArray(256) { -1 }.also { charset ->
+    ENCODING_CHARSET.forEachIndexed { index, byte ->
+        charset[byte.toInt()] = index.toByte()
+    }
+}
 
 /**
  *  The Base45 Data Decoding
@@ -32,35 +38,33 @@ import java.math.BigInteger
 @ExperimentalUnsignedTypes
 class Base45Decoder {
 
-    private val alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:"
-    private val int45 = BigInteger.valueOf(45)
+    @Throws(Base45DecodeException::class)
+    fun decode(input: String): ByteArray =
+        input.toByteArray().asSequence().map {
+            DECODING_CHARSET[it.toInt()].also { index ->
+                if (index < 0) throw Base45DecodeException("Invalid characters in input.")
+            }
+        }.chunked(3) { chunk ->
+            if (chunk.size < 2) throw Base45DecodeException("Invalid input length.")
+            chunk.reversed().toInt(45).toBase(base = 256, count = chunk.size - 1).reversed()
+        }.flatten().toList().toByteArray()
 
-    fun decode(input: String) =
-        input.chunked(3).map(this::decodeThreeCharsPadded)
-            .flatten().map { it.toByte() }.toByteArray()
-
-    private fun decodeThreeCharsPadded(input: String): List<UByte> {
-        val result = decodeThreeChars(input).toMutableList()
-        when (input.length) {
-            3 -> while (result.size < 2) result += 0U
+    /** Converts integer to a list of [count] integers in the given [base]. */
+    @Throws(Base45DecodeException::class)
+    private fun Int.toBase(base: Int, count: Int): List<Byte> =
+        mutableListOf<Byte>().apply {
+            var tmp = this@toBase
+            repeat(count) {
+                add((tmp % base).toByte())
+                tmp /= base
+            }
+            if (tmp != 0) throw Base45DecodeException("Invalid character sequence.")
         }
-        return result.reversed()
-    }
 
-    private fun decodeThreeChars(list: String) =
-        generateSequenceByDivRem(fromThreeCharValue(list))
-            .map { it.toUByte() }.toList()
-
-    private fun fromThreeCharValue(list: String): Long {
-        return list.foldIndexed(0L, { index, acc: Long, element ->
-            if (!alphabet.contains(element)) throw IllegalArgumentException()
-            pow(int45, index) * alphabet.indexOf(element) + acc
-        })
-    }
-
-    private fun generateSequenceByDivRem(seed: Long) =
-        generateSequence(seed) { if (it >= 256) it.div(256) else null }
-            .map { it.rem(256).toInt() }
-
-    private fun pow(base: BigInteger, exp: Int) = base.pow(exp).toLong()
+    /** Converts list of bytes in given [base] to an integer. */
+    private fun List<Byte>.toInt(base: Int): Int =
+        fold(0) { acc, i -> acc * base + i.toUByte().toInt() }
 }
+
+/** Thrown when [Base45.decode] can't decode the input data. */
+class Base45DecodeException(message: String) : IllegalArgumentException(message)

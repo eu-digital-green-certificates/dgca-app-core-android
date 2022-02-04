@@ -31,4 +31,6 @@ import dgca.verifier.app.decoder.model.VerificationResult
 interface CoseService {
 
     fun decode(input: ByteArray, verificationResult: VerificationResult): CoseData?
+
+    fun anonymizeCose(input: ByteArray): ByteArray?
 }

@@ -22,10 +22,12 @@
 
 package dgca.verifier.app.decoder.cose
 
-import COSE.HeaderKeys
+import com.google.common.primitives.Bytes
 import com.upokecenter.cbor.CBORObject
 import dgca.verifier.app.decoder.model.CoseData
 import dgca.verifier.app.decoder.model.VerificationResult
+
+const val HEADER_KID = 4
 
 /**
  * Decodes input according to COSE specification (RFC8152)
@@ -48,7 +50,7 @@ class DefaultCoseService : CoseService {
     }
 
     private fun getKid(protectedHeader: ByteArray, unprotectedHeader: CBORObject): CBORObject? {
-        val key = HeaderKeys.KID.AsCBOR()
+        val key = CBORObject.FromObject(HEADER_KID)
         return if (protectedHeader.isNotEmpty()) {
             try {
                 val kid = CBORObject.DecodeFromBytes(protectedHeader).get(key)
@@ -58,6 +60,37 @@ class DefaultCoseService : CoseService {
             }
         } else {
             unprotectedHeader.get(key)
+        }
+    }
+
+    override fun anonymizeCose(input: ByteArray): ByteArray? {
+        return try {
+            val messageObject = CBORObject.DecodeFromBytes(input)
+
+            val content = messageObject[2].EncodeToBytes()
+            val index = Bytes.indexOf(input, content)
+
+            val newArray = ByteArray(input.size)
+
+            val anonymize = ByteArray(content.size)
+            anonymize.forEachIndexed { i, _ ->
+                anonymize[i] = 0x58
+            }
+
+            System.arraycopy(input, 0, newArray, 0, index)
+            System.arraycopy(anonymize, 0, newArray, index, anonymize.size)
+            System.arraycopy(
+                input,
+                index + anonymize.size,
+                newArray,
+                index + anonymize.size,
+                input.size - (anonymize.size + index)
+            )
+
+            newArray
+
+        } catch (e: Throwable) {
+            null
         }
     }
 }
