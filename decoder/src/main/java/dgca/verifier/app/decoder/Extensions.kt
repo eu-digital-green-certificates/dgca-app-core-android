@@ -117,10 +117,16 @@ fun getKeyPairFor(alias: String): KeyPairData {
     val privateKey: PrivateKey = (entry as KeyStore.PrivateKeyEntry).privateKey
     val publicKey: PublicKey = ks.getCertificate(alias).publicKey
     val keyPair = KeyPair(publicKey, privateKey)
-    val algo = when(privateKey.algorithm) {
+    val algo = when (privateKey.algorithm) {
         KeyProperties.KEY_ALGORITHM_EC -> SHA_256_WITH_ECDSA
         KeyProperties.KEY_ALGORITHM_RSA -> SHA_256_WITH_RSA
         else -> throw IllegalArgumentException()
     }
     return KeyPairData(algo, keyPair)
+}
+
+fun deleteKeyPairFor(alias: String) {
+    val ks: KeyStore = KeyStore.getInstance(ANDROID_KEYSTORE_PROVIDER)
+    ks.load(null)
+    ks.deleteEntry(alias)
 }
