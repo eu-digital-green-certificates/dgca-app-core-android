@@ -39,6 +39,9 @@ data class GreenCertificate(
     @JsonProperty("nam")
     val person: Person,
 
+    @JsonProperty("uId")
+    val uaCertificateData: UaCertificateData?,
+
     @JsonProperty("dob")
     val dateOfBirth: String,
 
