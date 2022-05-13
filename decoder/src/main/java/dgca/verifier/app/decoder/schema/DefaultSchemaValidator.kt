@@ -28,6 +28,7 @@ import com.github.fge.jsonschema.core.report.ProcessingReport
 import com.github.fge.jsonschema.main.JsonSchema
 import com.github.fge.jsonschema.main.JsonSchemaFactory
 import com.upokecenter.cbor.CBORObject
+import dgca.verifier.app.decoder.DIIA_UA_JSON_SCHEMA_V1
 import dgca.verifier.app.decoder.JSON_SCHEMA_V1
 import dgca.verifier.app.decoder.cwt.CwtHeaderKeys
 import dgca.verifier.app.decoder.model.VerificationResult
@@ -37,7 +38,7 @@ import dgca.verifier.app.decoder.model.VerificationResult
  *
  * @see JSON_SCHEMA_V1
  */
-class DefaultSchemaValidator : SchemaValidator {
+class DefaultSchemaValidator(private val jsonSchema: String) : SchemaValidator {
 
     override fun validate(cbor: ByteArray, verificationResult: VerificationResult): Boolean {
         var isValid = false
@@ -47,7 +48,7 @@ class DefaultSchemaValidator : SchemaValidator {
             val json = hcert[CBORObject.FromObject(1)].ToJSONString()
 
             val mapper = ObjectMapper()
-            val schemaNode: JsonNode = mapper.readTree(JSON_SCHEMA_V1)
+            val schemaNode: JsonNode = mapper.readTree(jsonSchema)
             val jsonNode: JsonNode = mapper.readTree(json)
 
             val factory = JsonSchemaFactory.byDefault()
