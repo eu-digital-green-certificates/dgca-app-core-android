@@ -20,18 +20,45 @@ import dgca.verifier.app.decoder.prefixvalidation.PrefixValidationService
 import dgca.verifier.app.decoder.schema.DefaultSchemaValidator
 import dgca.verifier.app.decoder.schema.SchemaValidator
 import dgca.verifier.app.decoder.services.X509
+import org.junit.After
 import org.junit.Assert
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
+import org.mockito.MockedStatic
+import org.mockito.Mockito.*
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.security.cert.CertificateException
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
+import java.time.Clock
+import java.time.Instant
 import java.util.*
 
+
 class QrCodeTests {
+
+    private var clockMock: MockedStatic<Clock>? = null
+
+    @Before
+    fun setup() {
+        mockInstant(1640000000) // set desired return value 2021-12-20T11:33:20Z
+    }
+
+    @After
+    fun destroy() {
+        clockMock!!.close()
+    }
+
+    private fun mockInstant(expected: Long) {
+        val spyClock: Clock = spy(Clock::class.java)
+        clockMock = mockStatic(Clock::class.java)
+        clockMock!!.`when`<Any> { Clock.systemUTC() }.thenReturn(spyClock)
+        `when`(spyClock.instant()).thenReturn(Instant.ofEpochSecond(expected))
+    }
+
     @Throws(CertificateException::class)
     fun toCertificate(pubKey: String?): X509Certificate {
         val `in` = Base64.getDecoder().decode(pubKey)
