@@ -28,6 +28,7 @@ import dgca.verifier.app.decoder.model.GreenCertificate
 import dgca.verifier.app.decoder.model.VerificationResult
 import java.time.Instant
 import java.time.ZoneOffset
+import java.util.*
 
 /**
  * Decodes input as a CBOR structure
@@ -48,11 +49,11 @@ class DefaultCborService(private val greenCertificateMapper: GreenCertificateMap
 
             val issuingCountry: String? = map[CwtHeaderKeys.ISSUING_COUNTRY.asCBOR()]?.AsString()
 
-            val issuedAt = Instant.ofEpochSecond(map[CwtHeaderKeys.ISSUED_AT.asCBOR()].AsInt64())
-            verificationResult.isIssuedTimeCorrect = issuedAt.isBefore(Instant.now())
+            val issuedAt = Date(map[CwtHeaderKeys.ISSUED_AT.asCBOR()].AsInt64()*1000)
+            verificationResult.isIssuedTimeCorrect = issuedAt.before(Date())
 
-            val expirationTime = Instant.ofEpochSecond(map[CwtHeaderKeys.EXPIRATION.asCBOR()].AsInt64())
-            verificationResult.isNotExpired = expirationTime.isAfter(Instant.now())
+            val expirationTime = Date(map[CwtHeaderKeys.EXPIRATION.asCBOR()].AsInt64()*1000)
+            verificationResult.isNotExpired = expirationTime.after(Date())
 
             val hcert = map[CwtHeaderKeys.HCERT.asCBOR()]
 
@@ -64,8 +65,8 @@ class DefaultCborService(private val greenCertificateMapper: GreenCertificateMap
                 issuingCountry,
                 cborObject.ToJSONString(),
                 greenCertificate,
-                issuedAt.atZone(ZoneOffset.UTC),
-                expirationTime.atZone(ZoneOffset.UTC)
+                issuedAt,
+                expirationTime
             )
         } catch (e: Throwable) {
             null
