@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Vaccination</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+const savedDarkMode = storage ? JSON.parse(storage) : false
+if(savedDarkMode === true){
+    document.getElementsByTagName("html")[0].classList.add("theme-dark")
+}</script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../../index.html">
+                    <span>decoder</span>
+            </a>
+    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageIds="decoder::dgca.verifier.app.decoder.model/Vaccination///PointingToDeclaration//1141589540">
+  <div class="breadcrumbs"><a href="../../../index.html">decoder</a><span class="delimiter">/</span><a href="../index.html">dgca.verifier.app.decoder.model</a><span class="delimiter">/</span><a href="index.html">Vaccination</a></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Vaccination</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">public </span><span class="token keyword">final </span><span class="token keyword"></span><span class="token keyword">class </span><a href="index.html">Vaccination</a><span class="token keyword"> implements </span><a href="https://developer.android.com/reference/kotlin/java/io/Serializable.html">Serializable</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="tabbedcontent">Constructors</h2>
+      <div class="table" data-togglable="Constructors"><a data-name="-418194115%2FConstructors%2F1141589540" anchor-label="Vaccination" id="-418194115%2FConstructors%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue TabbedContent">
+            <div class=""><span class="inline-flex">
+                <div><a href="-vaccination.html"><span><span>Vaccination</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-418194115%2FConstructors%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword"></span><a href="index.html">Vaccination</a> <a href="-vaccination.html"><span class="token function">Vaccination</span></a><span class="token punctuation">(</span><span class="parameters wrapped"><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> disease<span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> vaccine<span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> medicinalProduct<span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> manufacturer<span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Integer.html">Integer</a> doseNumber<span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Integer.html">Integer</a> totalSeriesOfDoses<span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> dateOfVaccination<span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> countryOfVaccination<span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> certificateIssuer<span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;<span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> certificateIdentifier</span></span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="-1907869087%2FFunctions%2F1141589540" anchor-label="getCertificateIdentifier" id="-1907869087%2FFunctions%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-certificate-identifier.html"><span>get</span><wbr></wbr><span>Certificate</span><wbr></wbr><span><span>Identifier</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1907869087%2FFunctions%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="get-certificate-identifier.html"><span class="token function">getCertificateIdentifier</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-379845423%2FFunctions%2F1141589540" anchor-label="getCertificateIssuer" id="-379845423%2FFunctions%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-certificate-issuer.html"><span>get</span><wbr></wbr><span>Certificate</span><wbr></wbr><span><span>Issuer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-379845423%2FFunctions%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="get-certificate-issuer.html"><span class="token function">getCertificateIssuer</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="883234305%2FFunctions%2F1141589540" anchor-label="getCountryOfVaccination" id="883234305%2FFunctions%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-country-of-vaccination.html"><span>get</span><wbr></wbr><span>Country</span><wbr></wbr><span>Of</span><wbr></wbr><span><span>Vaccination</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="883234305%2FFunctions%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="get-country-of-vaccination.html"><span class="token function">getCountryOfVaccination</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1558302943%2FFunctions%2F1141589540" anchor-label="getDateOfVaccination" id="-1558302943%2FFunctions%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-date-of-vaccination.html"><span>get</span><wbr></wbr><span>Date</span><wbr></wbr><span>Of</span><wbr></wbr><span><span>Vaccination</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1558302943%2FFunctions%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="get-date-of-vaccination.html"><span class="token function">getDateOfVaccination</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="547002629%2FFunctions%2F1141589540" anchor-label="getDisease" id="547002629%2FFunctions%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-disease.html"><span>get</span><wbr></wbr><span><span>Disease</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="547002629%2FFunctions%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="get-disease.html"><span class="token function">getDisease</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1349317363%2FFunctions%2F1141589540" anchor-label="getDoseNumber" id="1349317363%2FFunctions%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-dose-number.html"><span>get</span><wbr></wbr><span>Dose</span><wbr></wbr><span><span>Number</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1349317363%2FFunctions%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Integer.html">Integer</a> <a href="get-dose-number.html"><span class="token function">getDoseNumber</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1916165048%2FFunctions%2F1141589540" anchor-label="getManufacturer" id="-1916165048%2FFunctions%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-manufacturer.html"><span>get</span><wbr></wbr><span><span>Manufacturer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1916165048%2FFunctions%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="get-manufacturer.html"><span class="token function">getManufacturer</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1179973632%2FFunctions%2F1141589540" anchor-label="getMedicinalProduct" id="1179973632%2FFunctions%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-medicinal-product.html"><span>get</span><wbr></wbr><span>Medicinal</span><wbr></wbr><span><span>Product</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1179973632%2FFunctions%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="get-medicinal-product.html"><span class="token function">getMedicinalProduct</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="931967349%2FFunctions%2F1141589540" anchor-label="getTotalSeriesOfDoses" id="931967349%2FFunctions%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-total-series-of-doses.html"><span>get</span><wbr></wbr><span>Total</span><wbr></wbr><span>Series</span><wbr></wbr><span>Of</span><wbr></wbr><span><span>Doses</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="931967349%2FFunctions%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Integer.html">Integer</a> <a href="get-total-series-of-doses.html"><span class="token function">getTotalSeriesOfDoses</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="390150380%2FFunctions%2F1141589540" anchor-label="getVaccine" id="390150380%2FFunctions%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="get-vaccine.html"><span>get</span><wbr></wbr><span><span>Vaccine</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="390150380%2FFunctions%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="get-vaccine.html"><span class="token function">getVaccine</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1749321399%2FFunctions%2F1141589540" anchor-label="isDateInThePast" id="-1749321399%2FFunctions%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="is-date-in-the-past.html"><span>is</span><wbr></wbr><span>Date</span><wbr></wbr><span>In</span><wbr></wbr><span>The</span><wbr></wbr><span><span>Past</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1749321399%2FFunctions%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><div class="symbol monospace block"><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Boolean.html">Boolean</a> <a href="is-date-in-the-past.html"><span class="token function">isDateInThePast</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="-1264735857%2FProperties%2F1141589540" anchor-label="certificateIdentifier" id="-1264735857%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#-1264735857%2FProperties%2F1141589540">certificateIdentifier</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1264735857%2FProperties%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><a data-name="-1264735857%2FProperties%2F1141589540" anchor-label="certificateIdentifier" id="-1264735857%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="index.html#-1264735857%2FProperties%2F1141589540">certificateIdentifier</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1077164799%2FProperties%2F1141589540" anchor-label="certificateIssuer" id="1077164799%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#1077164799%2FProperties%2F1141589540">certificateIssuer</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1077164799%2FProperties%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><a data-name="1077164799%2FProperties%2F1141589540" anchor-label="certificateIssuer" id="1077164799%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="index.html#1077164799%2FProperties%2F1141589540">certificateIssuer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1735264531%2FProperties%2F1141589540" anchor-label="countryOfVaccination" id="1735264531%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#1735264531%2FProperties%2F1141589540">countryOfVaccination</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1735264531%2FProperties%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><a data-name="1735264531%2FProperties%2F1141589540" anchor-label="countryOfVaccination" id="1735264531%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="index.html#1735264531%2FProperties%2F1141589540">countryOfVaccination</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-101292721%2FProperties%2F1141589540" anchor-label="dateOfVaccination" id="-101292721%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#-101292721%2FProperties%2F1141589540">dateOfVaccination</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-101292721%2FProperties%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><a data-name="-101292721%2FProperties%2F1141589540" anchor-label="dateOfVaccination" id="-101292721%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="index.html#-101292721%2FProperties%2F1141589540">dateOfVaccination</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1001001139%2FProperties%2F1141589540" anchor-label="disease" id="1001001139%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#1001001139%2FProperties%2F1141589540">disease</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1001001139%2FProperties%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><a data-name="1001001139%2FProperties%2F1141589540" anchor-label="disease" id="1001001139%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="index.html#1001001139%2FProperties%2F1141589540">disease</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1566913669%2FProperties%2F1141589540" anchor-label="doseNumber" id="1566913669%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#1566913669%2FProperties%2F1141589540">doseNumber</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1566913669%2FProperties%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><a data-name="1566913669%2FProperties%2F1141589540" anchor-label="doseNumber" id="1566913669%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Integer.html">Integer</a> <a href="index.html#1566913669%2FProperties%2F1141589540">doseNumber</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1035454810%2FProperties%2F1141589540" anchor-label="manufacturer" id="1035454810%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#1035454810%2FProperties%2F1141589540">manufacturer</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1035454810%2FProperties%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><a data-name="1035454810%2FProperties%2F1141589540" anchor-label="manufacturer" id="1035454810%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="index.html#1035454810%2FProperties%2F1141589540">manufacturer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1504068626%2FProperties%2F1141589540" anchor-label="medicinalProduct" id="1504068626%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#1504068626%2FProperties%2F1141589540">medicinalProduct</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1504068626%2FProperties%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><a data-name="1504068626%2FProperties%2F1141589540" anchor-label="medicinalProduct" id="1504068626%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="index.html#1504068626%2FProperties%2F1141589540">medicinalProduct</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1145356025%2FProperties%2F1141589540" anchor-label="totalSeriesOfDoses" id="-1145356025%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#-1145356025%2FProperties%2F1141589540">totalSeriesOfDoses</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1145356025%2FProperties%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><a data-name="-1145356025%2FProperties%2F1141589540" anchor-label="totalSeriesOfDoses" id="-1145356025%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/Integer.html">Integer</a> <a href="index.html#-1145356025%2FProperties%2F1141589540">totalSeriesOfDoses</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="844148890%2FProperties%2F1141589540" anchor-label="vaccine" id="844148890%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a>
+        <div class="table-row" data-filterable-current=":decoder:dokkaHtml/release" data-filterable-set=":decoder:dokkaHtml/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="index.html#844148890%2FProperties%2F1141589540">vaccine</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="844148890%2FProperties%2F1141589540"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":decoder:dokkaHtml/release"><a data-name="844148890%2FProperties%2F1141589540" anchor-label="vaccine" id="844148890%2FProperties%2F1141589540" data-filterable-set=":decoder:dokkaHtml/release"></a><div class="symbol monospace block"><span class="token keyword">private </span><span class="token keyword">final </span><span class="token keyword"></span><a href="https://developer.android.com/reference/kotlin/java/lang/String.html">String</a> <a href="index.html#844148890%2FProperties%2F1141589540">vaccine</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2022 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

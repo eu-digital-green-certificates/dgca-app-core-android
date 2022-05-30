@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id("org.jetbrains.dokka") version "1.6.21"
 }
 
 android {
@@ -63,4 +64,5 @@ dependencies {
     testImplementation "org.mockito:mockito-inline:2.7.21"
 
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.1"
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.21")
 }
