@@ -24,25 +24,20 @@ This repository contains the source code of the EU Digital COVID Certificate App
 
 The app core provides shared functionality for the [verifier](https://github.com/eu-digital-green-certificates/dgca-verifier-app-android) and [wallet](https://github.com/eu-digital-green-certificates/dgca-wallet-app-android) apps.
 
-## Development
+Base module that provides functionality for handling DCC certificate type. It decodes the base45-encoded QR code, extracts the COSE signature, and decodes CBOR back to JSON. It then verifies the signature with the keys provided by the verifier/wallet app’s backend. The module uses only open-source libraries.
 
-### Prerequisites
+## Documentation
 
-- [ ] TODO: Describe prerequisites
+Module features:
+- Prefix validation: Drops a country-specific prefix from contents, e.g. "HC1:"
+- Base45 Decoding: decodes provided input according to specification: [Base45](https://datatracker.ietf.org/doc/draft-faltstrom-base45/?include_text=1)
+- Decompression with ZLIB
+- Decodes input according to COSE specification [RFC8152](https://datatracker.ietf.org/doc/html/rfc8152)
+- Decodes input as a [CBOR structure](https://datatracker.ietf.org/doc/html/rfc7049)
+- Schema validation - verifies CBOR with predefined schema (JsonSchema.kt#JSON_SCHEMA_V1)
+- Verifies COSE signature
 
-### Build
-
-Whether you cloned or downloaded the 'zipped' sources you will either find the sources in the chosen checkout-directory or get a zip file with the source code, which you can expand to a folder of your choice.
-
-In either case open a terminal pointing to the directory you put the sources in. The local build process is described afterwards depending on the way you choose.
-
-#### XYZ (Maven, Docker ...) based build
-
-- [ ] TODO: Add instructions for different build types
-
-## Documentation  
-
-- [ ] TODO: Link to documentation
+For more details check unit tests to see how it works step by step.
 
 ## Support and feedback
 

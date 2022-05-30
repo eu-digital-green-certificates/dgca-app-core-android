@@ -67,7 +67,7 @@ class QrCodeTests {
             .generateCertificate(inputStream) as X509Certificate
     }
 
-    fun verifyResult(prefix: String?, PublicKey: String?): VerificationResult {
+    private fun verifyResult(prefix: String?, PublicKey: String?): VerificationResult {
         val result = VerificationResult()
         val b45Service: Base45Service = DefaultBase45Service()
         val prefService: PrefixValidationService = DefaultPrefixValidationService()
