@@ -31,8 +31,8 @@ data class GreenCertificateData(
     val issuingCountry: String?,
     val hcertJson: String,
     val greenCertificate: GreenCertificate,
-    val issuedAt: ZonedDateTime,
-    val expirationTime: ZonedDateTime
+    val issuedAt: Date,
+    val expirationTime: Date
 ) {
 
     fun getNormalizedIssuingCountry(): String =
